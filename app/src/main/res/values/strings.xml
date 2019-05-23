@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ViewPagerCards</string>
+
+    <string name="title_1">PCS</string>
+    <string name="title_2">SS</string>
+    <string name="title_3">FCE</string>
+    <string name="title_4">MATHS</string>
+
+    <string name="text_1">Please Select Your Subject</string>
+</resources>
