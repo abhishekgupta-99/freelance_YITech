@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Student_Item_Card {
     private String student_name;
     private String roll_no;
+    private boolean isSelected;
     private ArrayList<String> triggered_alarms;
 
 
@@ -45,5 +46,10 @@ public class Student_Item_Card {
         this.student_name = student_name;
     }
 
-
+        public boolean isSelected() {
+        return isSelected;
+    }
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 }
