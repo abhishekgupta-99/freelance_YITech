@@ -1,9 +1,6 @@
 package com.example.sql_project;
-
+import android.app.Activity;
 import android.app.Dialog;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +19,7 @@ import com.example.sql_project.HelperClass.Student_Item_Card;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends Activity {
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
 
@@ -39,7 +36,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         db = new DatabaseHelper(this);
         student=findViewById(R.id.student);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        Button fab = findViewById(R.id.fab);
         mRecyclerview();
         updateUI();
 
@@ -48,13 +45,11 @@ public class MainActivity extends AppCompatActivity  {
         //student_list = dataset();
 
 
-
-
+//Uncomment this for fav action click
+//
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Snackbar.make(v, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                  show_Add_Student_Dialog();
 
             }

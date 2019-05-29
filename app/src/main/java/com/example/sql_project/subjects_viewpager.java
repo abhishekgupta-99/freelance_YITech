@@ -1,16 +1,34 @@
 package com.example.sql_project;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
-public class subjects_viewpager extends AppCompatActivity implements View.OnClickListener,
+import java.util.Calendar;
+
+public class subjects_viewpager extends FragmentActivity implements View.OnClickListener,
         CompoundButton.OnCheckedChangeListener {
+
+
+    static final int TIME_DIALOG_ID = 1111;
+
+    final Calendar c = Calendar.getInstance();
+    int hr = c.get(Calendar.HOUR_OF_DAY);
+    int min = c.get(Calendar.MINUTE);
+    TextView v;
+
 
     private Button mButton;
     private ViewPager mViewPager;
@@ -21,15 +39,20 @@ public class subjects_viewpager extends AppCompatActivity implements View.OnClic
     private ShadowTransformer mFragmentCardShadowTransformer;
 
     private boolean mShowingFragments = false;
+    DateTime dt=new DateTime();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subjects_viewpager);
+        v=findViewById(R.id.time);
+        dt.updateTime(hr, min,v);
+
+
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        mButton = (Button) findViewById(R.id.cardTypeBtn);
+  //      mButton = (Button) findViewById(R.id.cardTypeBtn);
 //        ((CheckBox) findViewById(R.id.checkBox)).setOnCheckedChangeListener(this);
-        mButton.setOnClickListener(this);
+  //      mButton.setOnClickListener(this);
 
         mCardAdapter = new CardPagerAdapter();
         mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
@@ -81,4 +104,32 @@ public class subjects_viewpager extends AppCompatActivity implements View.OnClic
         mCardShadowTransformer.enableScaling(b);
         mFragmentCardShadowTransformer.enableScaling(b);
     }
+
+
+
+
+
+    public void TimePickerDialog(View view) {
+
+        createdDialog().show();
+    }
+
+
+
+    protected Dialog createdDialog() {
+
+        return new TimePickerDialog(subjects_viewpager.this, R.style.DialogTheme, timePickerListener, hr, min,
+                false);
+    }
+
+    public TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minutes) {
+// TODO Auto-generated method stub
+            hr = hourOfDay;
+            min = minutes;
+            dt.updateTime(hr, min, v);
+        }
+    };
+
 }

@@ -31,11 +31,24 @@
             android:layout_margin="10dp"
             android:text="Student Name" />
 
+
+        <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+            android:id="@+id/circular_progress"
+            android:layout_width="40dp"
+            android:layout_toLeftOf="@+id/checkbox"
+            android:layout_margin="10dp"
+            app:enableProgressAnimation="true"
+            app:progressStrokeWidth="5dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            />
+
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_margin="10dp"
+            android:id="@+id/checkbox"
             android:buttonTint="@android:color/holo_blue_light"
             android:layout_alignParentRight="true" />
 

@@ -25,7 +25,7 @@ public class DateTime extends AppCompatActivity {
         setContentView(R.layout.activity_date_time);
      view=findViewById(R.id.time);
 
-        updateTime(hr, min);
+
     }
 
     public void TimePickerDialog(View view) {
@@ -40,20 +40,20 @@ public class DateTime extends AppCompatActivity {
                 return new TimePickerDialog(DateTime.this, timePickerListener, hr, min, false);
          }
 
-    private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+    public TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minutes) {
 // TODO Auto-generated method stub
             hr = hourOfDay;
             min = minutes;
-            updateTime(hr, min);
+          //  updateTime(hr, min);
         }
     };
     private static String utilTime(int value) {
         if (value < 10) return "0" + String.valueOf(value); else return String.valueOf(value); }
 
 
-        private void updateTime(int hours, int mins)
+        public void updateTime(int hours, int mins,TextView view)
         {
             String timeSet = "";
             if (hours > 12) {
