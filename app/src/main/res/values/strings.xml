@@ -7,4 +7,9 @@
     <string name="title_4">MATHS</string>
 
     <string name="text_1">Please Select Your Subject</string>
+
+    <string name="add">Add A Student</string>
+    <string name="delete">Delete A Student</string>
+    <string name="update">Update A Student</string>
+
 </resources>

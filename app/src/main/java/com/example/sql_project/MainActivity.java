@@ -1,6 +1,7 @@
 package com.example.sql_project;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -159,4 +160,13 @@ public class MainActivity extends Activity {
 
     }
 
+    public void Update_Sheet(View view) {
+    }
+
+    public void student_crud(View view) {
+        Intent i=new Intent(this,Student_CRUD.class);
+        startActivity(i);
+        finish();
+
+    }
 }
