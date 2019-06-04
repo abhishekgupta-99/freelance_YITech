@@ -10,6 +10,8 @@ import com.example.sql_project.HelperClass.Student_Item_Card;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.sql.Types.NULL;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
@@ -51,6 +53,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // no need to add them
         values.put(stu.COLUMN_NOTE, StudentName);
         values.put(stu.COLUMN_ROLL_NO,Integer.parseInt(rno));
+        values.put(stu.COLUMN_Last_Attendance, NULL);
+        values.put(stu.COLUMN_percent_Attendance, 20);
 
         // insert row
         long id = db.insert(stu.TABLE_NAME, null, values);
@@ -78,7 +82,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Student Student = new Student(
                 cursor.getInt(cursor.getColumnIndex(stu.COLUMN_ID)),
                 cursor.getString(cursor.getColumnIndex(stu.COLUMN_NOTE)),
-                cursor.getString(cursor.getColumnIndex(stu.COLUMN_TIMESTAMP)));
+                cursor.getString(cursor.getColumnIndex(stu.COLUMN_TIMESTAMP)),
+                cursor.getString(cursor.getColumnIndex(stu.COLUMN_Last_Attendance)),
+                cursor.getString(cursor.getColumnIndex(stu.COLUMN_percent_Attendance))
+                );
 
         // close the db connection
         cursor.close();
@@ -168,6 +175,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         //only one column
                         obj.set_student_name(cursor.getString(1));
                         obj.set_roll_no(cursor.getString(0));
+                        obj.setLast_Attendance(cursor.getString(3));
+                        obj.setPercent(cursor.getString(4));
 
                         //you could add additional columns here..
 

@@ -113,19 +113,19 @@ public class MainActivity extends Activity {
 
     }
 
-    private ArrayList<Student_Item_Card> dataset() {
-
-        ArrayList<Student_Item_Card> each_student_data=new ArrayList<>();
-
-        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
-        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
-        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
-        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
-        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
-        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
-
-        return each_student_data;
-    }
+//    private ArrayList<Student_Item_Card> dataset() {
+//
+//        ArrayList<Student_Item_Card> each_student_data=new ArrayList<>();
+//
+//        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
+//        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
+//        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
+//        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
+//        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
+//        each_student_data.add(new Student_Item_Card("Abhishek Gupta","17"));
+//
+//        return each_student_data;
+//    }
 
 
     private void createNote(String name,String rno) {

@@ -7,11 +7,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.sql_project.R;
-
 import java.util.ArrayList;
 
+import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements View.OnClickListener{
@@ -31,6 +30,7 @@ Context context;
         public TextView student_name;
         public TextView roll_no;
         CheckBox checkBox;
+        CircularProgressIndicator cp;
 
 
         public ViewHolder(View itemView) {
@@ -39,6 +39,7 @@ Context context;
             student_name = itemView.findViewById(R.id.student);
             roll_no = itemView.findViewById(R.id.roll_no);
             checkBox= itemView.findViewById(R.id.checkbox);
+            cp=itemView.findViewById(R.id.circular_progress);
         }
     }
 
@@ -61,6 +62,9 @@ Context context;
         Student_Item_Card currentItem = mStudentItemCardList.get(position);
         holder.student_name.setText(currentItem.get_student_name());
         holder.roll_no.setText(currentItem.get_roll_no());
+        holder.cp.setMaxProgress(100);
+        holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
+
         holder.checkBox.setTag(position);
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
