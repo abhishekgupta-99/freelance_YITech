@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Student_CRUD">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/text"
-    android:text="Dummy"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/update_sheet"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:padding="4dp"
+            android:scrollbars="vertical" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:onClick="Update_Sheet"
+            android:layout_margin="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignWithParentIfMissing="true"
+            app:cardCornerRadius="5dp"
+            android:id="@+id/update_sheet"
+            android:layout_centerInParent="true"
+            app:cardBackgroundColor="@color/colorAccent"
+            >
+
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update GOOGLE SHEET"
+                android:textColor="#fff" />
+
+        </android.support.v7.widget.CardView>
+
+
+
+
+
+    </RelativeLayout>
+
 
     <com.nightonke.boommenu.BoomMenuButton
         android:id="@+id/bmb"
@@ -23,3 +66,6 @@
         app:bmb_buttonPlaceEnum="buttonPlace_ham_3"
         android:layout_alignParentRight="true" />
 </RelativeLayout>
+
+
+

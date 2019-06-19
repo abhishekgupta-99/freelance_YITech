@@ -1,5 +1,6 @@
 package com.example.sql_project.HelperClass;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,12 +59,17 @@ Context context;
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        int gradientType = CircularProgressIndicator.LINEAR_GRADIENT;
+        int endColor = Color.MAGENTA;
         holder.setIsRecyclable(false);
         Student_Item_Card currentItem = mStudentItemCardList.get(position);
         holder.student_name.setText(currentItem.get_student_name());
         holder.roll_no.setText(currentItem.get_roll_no());
         holder.cp.setMaxProgress(100);
         holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
+        if(Double.parseDouble(currentItem.getPercent().trim())< 75) {
+            holder.cp.setGradient(gradientType, endColor);
+        }
 
         holder.checkBox.setTag(position);
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
