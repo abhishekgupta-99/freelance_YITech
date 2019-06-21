@@ -9,6 +9,26 @@ public class Student_Item_Card {
     private String Last_Attendance;
     private String percent;
 
+    public String getTotallecs() {
+        return totallecs;
+    }
+
+    public void setTotallecs(String totallecs) {
+        this.totallecs = totallecs;
+    }
+
+    private String totallecs;
+
+    public String getPresent_lecs() {
+        return present_lecs;
+    }
+
+    public void setPresent_lecs(String present_lecs) {
+        this.present_lecs = present_lecs;
+    }
+
+    private String present_lecs;
+
 
 
     public Student_Item_Card(String student_name, String roll_no,String Last_Attendance,String percent) {

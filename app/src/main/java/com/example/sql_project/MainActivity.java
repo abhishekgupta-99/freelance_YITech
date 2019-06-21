@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends Activity {
     private RecyclerView mRecyclerView;
@@ -44,6 +45,7 @@ public class MainActivity extends Activity {
     EditText studentname;
     private RecyclerView.LayoutManager mLayoutManager;
     public ArrayList<Student_Item_Card> student_list;
+    String absent_roll_nos="";
     TextView student;
 
 
@@ -143,7 +145,8 @@ public class MainActivity extends Activity {
             JSONObject jobj = new JSONObject(jsonResposnce);
             Log.d("jsonobj",jobj.toString());
             JSONArray jarray = jobj.getJSONArray("items");
-            Log.d("jsonarray",jarray.toString());
+            Integer total_lecs=jobj.getInt("total_lecs");
+            Log.d("totallecs",total_lecs+"");
 
 
             for (int i = 0; i < jarray.length(); i++) {
@@ -154,6 +157,7 @@ public class MainActivity extends Activity {
                 String json_studentName = jo.getString("StudentsName");
                 String json_rollno = jo.getString("Roll No");
                 String json_percent_Attend = jo.getString("percentAttend");
+                String json_lecs_attended = jo.getString("PresentLecs");
 
 //                Log.d("name",json_studentName);
               //  String price = jo.getString("price");
@@ -162,6 +166,8 @@ public class MainActivity extends Activity {
                 obj.set_roll_no(json_rollno);
                 obj.setPercent(json_percent_Attend+"");
                 obj.setLast_Attendance("P");
+                obj.setTotallecs(total_lecs+"");
+                obj.setPresent_lecs(json_lecs_attended);
                // obj.setLast_Attendance(cursor.getString(3));
                 //obj.setPercent(cursor.getString(4));
 
@@ -170,7 +176,7 @@ public class MainActivity extends Activity {
 //                item.put("itemName", json_studentName);
 //                item.put("brand", json_rollno);
               //  item.put("price",price);
-                Log.d("OBJECTT",json_percent_Attend.toString());
+               // Log.d("OBJECTT",json_percent_Attend.toString());
 
                 list.add(obj);
 
@@ -288,6 +294,16 @@ public class MainActivity extends Activity {
     }
 
     public void Update_Sheet(View view) {
+
+     ArrayList<Student_Item_Card> absent_students=  mAdapter.absentstudents();
+
+     for (int i=0;i<absent_students.size();i++)
+     {
+         String absent_rollno=absent_students.get(i).get_roll_no();
+         absent_roll_nos=absent_roll_nos+","+absent_rollno;
+         Log.d("absent_rollno",absent_roll_nos);
+     }
+        update_absent_students_GOOGLESHEET();
     }
 
     public void student_crud(View view) {
@@ -296,4 +312,53 @@ public class MainActivity extends Activity {
         finish();
 
     }
+
+
+    public void update_absent_students_GOOGLESHEET()
+    {
+        final ProgressDialog loading = ProgressDialog.show(this,"Adding Details","Please wait");
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        loading.dismiss();
+                        Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+                        //  Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                        //startActivity(intent);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> parmas = new HashMap<>();
+
+                //here we pass params
+
+                parmas.put("action", "addItem");
+                parmas.put("absent", absent_roll_nos);
+
+                //Toast.makeText(MainActivity.this, name, Toast.LENGTH_SHORT).show();
+                return parmas;
+            }
+        };
+
+        int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
+
+        RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(retryPolicy);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        queue.add(stringRequest);
+
+    }
+
 }

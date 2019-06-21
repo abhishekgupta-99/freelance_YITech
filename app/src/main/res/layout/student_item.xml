@@ -32,6 +32,32 @@
             android:layout_margin="10dp"
             android:text="Student Name" />
 
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/stats_icon"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_growth"
+            android:layout_below="@+id/student"
+            android:layout_toLeftOf="@+id/lectures_attended"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/student"
+            android:layout_margin="4dp"
+            android:layout_toRightOf="@+id/roll_no"
+            android:id="@+id/lectures_attended"
+            android:text="Lectures" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lectures_attended"
+            android:id="@+id/status"
+            android:layout_margin="4dp"
+            android:text="Status: " />
+
 
         <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
             android:id="@+id/circular_progress"
