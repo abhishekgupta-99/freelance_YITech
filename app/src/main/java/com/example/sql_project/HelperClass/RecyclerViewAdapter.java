@@ -2,6 +2,7 @@ package com.example.sql_project.HelperClass;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +18,12 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
-
-
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements View.OnClickListener{
     private ArrayList<Student_Item_Card> mStudentItemCardList;
     private ArrayList<Student_Item_Card> mStudentItemCardListFull;
 Context context;
-    ArrayList<Student_Item_Card> absentStudents=new ArrayList<>();
-Status status=new Status();
+   public ArrayList<Student_Item_Card> absentStudents=new ArrayList<>();
+    Status status=new Status();
     @Override
     public void onClick(View v) {
 
@@ -79,9 +78,20 @@ Status status=new Status();
         holder.lectures_attended.setText("Lectures :"+currentItem.getPresent_lecs()+"/"+currentItem.getTotallecs());
         holder.status.setText(status.setstatus(currentItem.getPresent_lecs(),currentItem.getTotallecs()));
         holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
-        if(Double.parseDouble(currentItem.getPercent().trim())< 75) {
-            holder.cp.setGradient(gradientType, endColor);
-        }
+        holder.cp.setTextColor(Color.YELLOW);
+//        if(Integer.parseInt(currentItem.getPercent())< 75) {
+//            holder.cp.setTextColor(Color.RED);
+//          //  holder.cp.setGradient(gradientType, Color.RED);
+//            Log.d("Entered  here",currentItem.getPercent());
+//        }
+//        else
+//
+//        {
+//            holder.cp.setTextColor(Color.YELLOW);
+//            //holder.cp.setGradient(gradientType, Color.RED);
+//            Log.d("Entered  here red",currentItem.getPercent());
+//
+//        }
 
 //in some cases, it will prevent unwanted situations
         holder.checkBox.setOnCheckedChangeListener(null);
@@ -150,6 +160,13 @@ Status status=new Status();
 
 
         return absentStudents;
+    }
+
+
+    public void empty_absentStudents()
+    {
+        absentStudents.clear();
+        Log.d("Abb",absentStudents.toString());
     }
 
 

@@ -4,16 +4,20 @@ public class Status {
 
 
     public String setstatus(String lecsattended,String totallecs) {
+
+        Integer lectures_attended= Integer.parseInt(lecsattended);
         String default_status="No Status";
         int requiredclassesfor75  = (int) (75* Integer.parseInt(totallecs))/100;
-        int requiredClasses = (int) (requiredclassesfor75-Integer.parseInt(lecsattended));
-        if(requiredClasses<requiredclassesfor75) {
-            String status = "On track,May leave next" + (requiredClasses - requiredclassesfor75) + "lectures";
+
+
+        if(lectures_attended>requiredclassesfor75) {
+            int requiredClasses = (int) (lectures_attended-requiredclassesfor75);
+            String status = "On track, May leave next " + requiredClasses+ " lectures";
             return status;
         }
-        else if(requiredclassesfor75<requiredClasses)
-        {
-            String status = "Not on track,Need to attend next" + (requiredClasses - requiredclassesfor75) + "lectures";
+        else if(requiredclassesfor75>lectures_attended)
+        {int requiredClasses = (int) (requiredclassesfor75-lectures_attended);
+            String status = "Not on track, Need to attend next " + (requiredClasses) + " lectures";
             return status;
         }
         else

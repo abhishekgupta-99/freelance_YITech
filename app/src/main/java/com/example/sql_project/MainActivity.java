@@ -78,7 +78,7 @@ public class MainActivity extends Activity {
 
     private void getItems() {
 
-           loading =  ProgressDialog.show(this,"Loading","please wait",false,true);
+           loading =  ProgressDialog.show(this,"Loading","Updating App",false,true);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems",
                 new Response.Listener<String>() {
@@ -188,7 +188,9 @@ public class MainActivity extends Activity {
 
         mAdapter = new RecyclerViewAdapter(list);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.empty_absentStudents();
         loading.dismiss();
+
 
     }
 
@@ -296,6 +298,7 @@ public class MainActivity extends Activity {
     public void Update_Sheet(View view) {
 
      ArrayList<Student_Item_Card> absent_students=  mAdapter.absentstudents();
+    // String absent_roll_nos="";
 
      for (int i=0;i<absent_students.size();i++)
      {
@@ -316,14 +319,16 @@ public class MainActivity extends Activity {
 
     public void update_absent_students_GOOGLESHEET()
     {
-        final ProgressDialog loading = ProgressDialog.show(this,"Adding Details","Please wait");
+        final ProgressDialog loading = ProgressDialog.show(this,"Adding Details to Google Sheet","Please wait");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         loading.dismiss();
+                        mAdapter.empty_absentStudents();
                         Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+                        absent_roll_nos="";
+                        getItems();
                         //  Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         //startActivity(intent);
 
