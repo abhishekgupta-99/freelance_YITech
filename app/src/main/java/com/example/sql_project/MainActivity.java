@@ -15,12 +15,17 @@ import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -32,6 +37,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,21 +47,22 @@ public class MainActivity extends Activity {
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
     ProgressDialog loading;
+    private static MainActivity mInstance;
+    private RequestQueue mRequestQueue;
 
-    private  DatabaseHelper db;
+    private DatabaseHelper db;
     EditText studentname;
     private RecyclerView.LayoutManager mLayoutManager;
     public ArrayList<Student_Item_Card> student_list;
-    String absent_roll_nos="";
+    String absent_roll_nos = "";
     TextView student;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         db = new DatabaseHelper(this);
-        student=findViewById(R.id.student);
+        student = findViewById(R.id.student);
         Button fab = findViewById(R.id.fab);
         mRecyclerview();
         //updateUI();
@@ -69,7 +77,7 @@ public class MainActivity extends Activity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 show_Add_Student_Dialog();
+                show_Add_Student_Dialog();
 
             }
         });
@@ -78,33 +86,105 @@ public class MainActivity extends Activity {
 
     private void getItems() {
 
-           loading =  ProgressDialog.show(this,"Loading","Updating App",false,true);
+        loading = ProgressDialog.show(this, "Loading", "Updating App", false, true);
 
+//        RequestQueue queue = Volley.newRequestQueue(this);
+//
+//        String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
+
+//        CacheRequest cacheRequest = new CacheRequest(0, url, new Response.Listener<NetworkResponse>() {
+//            @Override
+//            public void onResponse(NetworkResponse response) {
+//                try {
+//                    final String jsonString = new String(response.data,
+//                            HttpHeaderParser.parseCharset(response.headers));
+//                    //  JSONObject jsonObject = new JSONObject(jsonString);
+//                    parseItems(jsonString);
+//                    // textView.setText(jsonObject.toString(5));
+//                    // Toast.makeText(mContext, "onResponse:\n\n" + jsonObject.toString(), Toast.LENGTH_SHORT).show();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(MainActivity.this, "onErrorResponse:\n\n" + error.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//        {
+//            @Override
+//            public void deliverError(VolleyError error) {
+//                if (error instanceof NoConnectionError) {
+//                    Cache.Entry entry = this.getCacheEntry();
+//                    if(entry != null) {
+//                        Response<NetworkResponse> response = parseNetworkResponse(new NetworkResponse(HttpURLConnection.HTTP_OK,
+//                                entry.data, false, 0, entry.allResponseHeaders));
+//                        deliverResponse(response.result);
+//                        return;
+//                    }
+//                }
+//                super.deliverError(error);
+//            }
+//        };
+//
+//        // Add the request to the RequestQueue.
+//        queue.add(cacheRequest);
+//    }
+
+
+////////////////////////////////////////////////////////////////////////////Working////////////
+        final RequestQueue queue = Volley.newRequestQueue(this);
+        final String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems",
                 new Response.Listener<String>() {
+
                     @Override
                     public void onResponse(String response) {
                         parseItems(response);
+//                        Cache.Entry entry = new Cache.Entry();
+//                        queue.getCache().put(response,entry);
+                        queue.getCache().invalidate(url,true);
+
                         Log.d("ANSRESPONSE",response);
                     }
                 },
 
                 new Response.ErrorListener() {
-                    @Override
+                      @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
 
                     }
                 }
-        );
+        )
+        {
+            @Override
+            public void deliverError(VolleyError error) {
+                if (error instanceof NoConnectionError) {
+                    Cache.Entry entry = this.getCacheEntry();
+                    if(entry != null) {
+                        Response<String> response = parseNetworkResponse(new NetworkResponse(HttpURLConnection.HTTP_OK,
+                                entry.data, false, 0, entry.allResponseHeaders));
+                        Log.d("FAILEDCACHE",response.toString());
+                        deliverResponse(response.result);
+                        return;
+                    }
+                }
+                else
+                super.deliverError(error);
+            }
+        };
 
-        int socketTimeOut = 50000;
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+//        int socketTimeOut = 50000;
+//        RetryPolicy policy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+//
+//        stringRequest.setRetryPolicy(policy);
 
-        stringRequest.setRetryPolicy(policy);
-
-        RequestQueue queue = Volley.newRequestQueue(this);
+      //  RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(stringRequest);
+
+
 //
 //
 //        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems", null,
@@ -132,7 +212,7 @@ public class MainActivity extends Activity {
 //
 //
 //        Volley.newRequestQueue(MainActivity.this).add(request);
-    }
+}
 
 
     private void parseItems(String jsonResposnce) {
@@ -203,6 +283,9 @@ public class MainActivity extends Activity {
 
     }
 
+    public static synchronized MainActivity getInstance() {
+        return mInstance;
+    }
 
     private void updateUI() {
 
