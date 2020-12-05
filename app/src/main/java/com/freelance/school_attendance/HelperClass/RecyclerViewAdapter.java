@@ -1,4 +1,4 @@
-package com.example.sql_project.HelperClass;
+package com.freelance.school_attendance.HelperClass;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +10,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.sql_project.R;
-import com.example.sql_project.Status;
-
-import org.w3c.dom.Text;
+import com.freelance.school_attendance.R;
+import com.freelance.school_attendance.Status;
 
 import java.util.ArrayList;
 

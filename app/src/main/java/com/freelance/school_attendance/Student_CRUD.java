@@ -1,4 +1,4 @@
-package com.example.sql_project;
+package com.freelance.school_attendance;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,8 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.sql_project.HelperClass.RecyclerViewAdapter;
-import com.example.sql_project.HelperClass.Student_Item_Card;
+import com.freelance.school_attendance.HelperClass.RecyclerViewAdapter;
+import com.freelance.school_attendance.HelperClass.Student_Item_Card;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomButtons.HamButton;
 import com.nightonke.boommenu.BoomMenuButton;

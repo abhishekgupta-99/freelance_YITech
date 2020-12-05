@@ -1,11 +1,11 @@
-package com.example.sql_project;
+package com.freelance.school_attendance;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.sql_project.HelperClass.Student_Item_Card;
+import com.freelance.school_attendance.HelperClass.Student_Item_Card;
 
 import java.util.ArrayList;
 import java.util.List;

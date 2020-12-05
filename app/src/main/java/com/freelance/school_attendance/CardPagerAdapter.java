@@ -1,4 +1,4 @@
-package com.example.sql_project;
+package com.freelance.school_attendance;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;

@@ -1,4 +1,4 @@
-package com.example.sql_project.HelperClass;
+package com.freelance.school_attendance.HelperClass;
 import java.util.ArrayList;
 import java.util.HashMap;
 

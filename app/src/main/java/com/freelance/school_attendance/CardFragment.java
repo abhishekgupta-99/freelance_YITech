@@ -1,4 +1,4 @@
-package com.example.sql_project;
+package com.freelance.school_attendance;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

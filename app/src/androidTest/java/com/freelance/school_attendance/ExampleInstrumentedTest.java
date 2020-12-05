@@ -1,4 +1,4 @@
-package com.example.sql_project;
+package com.freelance.school_attendance;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

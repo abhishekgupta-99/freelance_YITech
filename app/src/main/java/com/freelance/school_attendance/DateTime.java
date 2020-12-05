@@ -1,5 +1,4 @@
-package com.example.sql_project;
-
+package com.freelance.school_attendance;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import java.util.Calendar;
