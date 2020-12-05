@@ -2,7 +2,7 @@ package com.freelance.school_attendance;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import java.util.Calendar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;

@@ -5,8 +5,8 @@ import android.content.Context;
 import android.graphics.Rect;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.widget.EditText;
 import android.widget.TextView;
