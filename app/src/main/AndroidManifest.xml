@@ -16,21 +16,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-<!--        <activity android:name="com.freelance.school_attendance.AppIntro"-->
-<!--            android:theme="@style/Theme.Intro"-->
-<!--            >-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-        <activity android:name="com.freelance.school_attendance.Student_CRUD" />
-        <activity android:name="com.freelance.school_attendance.DateTime" />
-        <activity android:name="com.freelance.school_attendance.subjects_viewpager" />
-        <activity android:name="com.freelance.school_attendance.MainActivity"/>
-
-        <activity android:name="com.freelance.school_attendance.AppIntro"
+        <activity android:name=".DropDownMenus"></activity>
+        <!-- <activity android:name="com.freelance.school_attendance.AppIntro" -->
+        <!-- android:theme="@style/Theme.Intro" -->
+        <!-- > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <activity android:name=".Student_CRUD" />
+        <activity android:name=".DateTime" />
+        <activity android:name=".subjects_viewpager" />
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".AppIntro"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

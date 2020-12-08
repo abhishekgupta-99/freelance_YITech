@@ -58,7 +58,7 @@ public class AppIntro extends MaterialIntroActivity {
 
    public void openMainActivity()
     {
-        Intent i=new Intent(this, MainActivity.class);
+        Intent i=new Intent(this, DropDownMenus.class);
         startActivity(i);
     }
 

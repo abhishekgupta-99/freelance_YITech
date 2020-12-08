@@ -5,7 +5,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.sql_project"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -48,10 +48,10 @@ dependencies {
     //implementation 'io.mattcarroll.hover:hover:0.9.8'
     implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'
     implementation 'com.nightonke:boommenu:2.1.1'
+//    implementation "com.github.skydoves:powerspinner:1.1.6"
 
+    implementation 'com.github.chivorns.androidx:smartmaterialspinner:1.2.1'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-
-
     implementation 'io.github.dreierf:material-intro-screen:0.0.6'
     //implementation 'com.heinrichreimersoftware:material-intro:x.y.z'
     // implementation 'agency.tango.android:material-intro-screen:0.0.5'
