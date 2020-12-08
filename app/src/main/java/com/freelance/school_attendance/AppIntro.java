@@ -1,10 +1,18 @@
 package com.freelance.school_attendance;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import android.view.View;
+import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -15,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import io.github.dreierf.materialintroscreen.MaterialIntroActivity;
 import io.github.dreierf.materialintroscreen.MessageButtonBehaviour;
 import io.github.dreierf.materialintroscreen.SlideFragmentBuilder;
+
+import static com.freelance.school_attendance.Student_CRUD.context;
 
 
 public class AppIntro extends MaterialIntroActivity {
@@ -40,8 +50,16 @@ public class AppIntro extends MaterialIntroActivity {
                     public void onClick(View v) {
                       //  showMessage("We provide solutions to make you love your work");
                         googlesignin();
+                      //  openMainActivity();
+
                     }
                 }, "Google SignIn"));
+    }
+
+   public void openMainActivity()
+    {
+        Intent i=new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
     public void googlesignin() {
@@ -76,6 +94,11 @@ public class AppIntro extends MaterialIntroActivity {
             Toast.makeText(this, "Successful Sign In", Toast.LENGTH_SHORT).show();
 
 
+
+          //  showDialog(AppIntro.this);
+            showDialoglib();
+
+    //  openMainActivity();
             //updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
@@ -83,5 +106,62 @@ public class AppIntro extends MaterialIntroActivity {
             Toast.makeText(this, "Failed Sign In", Toast.LENGTH_SHORT).show();
             //Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
+    }
+
+    void showDialoglib()
+    {
+        // Create Alert using Builder
+        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this)
+                .setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT)
+                .setTitle("Choose Your Role")
+                .setMessage("Please Choose One of the roles below.");
+        builder.addButton("SCHOOL", Color.parseColor("#FFFFFF"), Color.parseColor("#392061"), CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(AppIntro.this, "Upgrade tapped", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        builder.addButton("TEACHER", Color.parseColor("#FFFFFF"), Color.parseColor("#822E81"), CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(AppIntro.this, "Welcome Teacher !", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                openMainActivity();
+            }
+        });
+
+// Show the alert
+        builder.show();
+    }
+
+
+    public void showDialog(Activity activity) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialogbox);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        FrameLayout mDialogNo = dialog.findViewById(R.id.frmNo);
+        mDialogNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"School" ,Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        FrameLayout mDialogOk = dialog.findViewById(R.id.frmOk);
+        mDialogOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Teacher" ,Toast.LENGTH_SHORT).show();
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 }
