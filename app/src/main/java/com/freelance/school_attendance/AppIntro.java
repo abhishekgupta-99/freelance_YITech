@@ -5,8 +5,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+
+import android.provider.Settings;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
@@ -27,16 +30,20 @@ import io.github.dreierf.materialintroscreen.SlideFragmentBuilder;
 import static com.freelance.school_attendance.Student_CRUD.context;
 
 
-public class AppIntro extends MaterialIntroActivity {
+public class AppIntro extends Activity {
 
     private static final int RC_SIGN_IN = 321;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   setContentView(R.layout.activity_app_intro);
+        setContentView(R.layout.activity_app_intro);
 
-        addSlide(new SlideFragmentBuilder()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(Color.WHITE);
+        }
+       /* addSlide(new SlideFragmentBuilder()
                         .backgroundColor(R.color.colorPrimary)
                         .buttonsColor(R.color.colorAccent)
                      //   .possiblePermissions(new String[]{Manifest.permission.CALL_PHONE})
@@ -49,11 +56,11 @@ public class AppIntro extends MaterialIntroActivity {
                     @Override
                     public void onClick(View v) {
                       //  showMessage("We provide solutions to make you love your work");
-                        googlesignin();
+                        //googlesignin();
                       //  openMainActivity();
 
                     }
-                }, "Google SignIn"));
+                }, "Google SignIn"));*/
     }
 
    public void openMainActivity()
@@ -62,7 +69,7 @@ public class AppIntro extends MaterialIntroActivity {
         startActivity(i);
     }
 
-    public void googlesignin() {
+    public void googlesignin(View v) {
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -96,7 +103,8 @@ public class AppIntro extends MaterialIntroActivity {
 
 
           //  showDialog(AppIntro.this);
-            showDialoglib();
+           // showDialoglib();
+            startActivity(new Intent(this,ChooseRole.class));
 
     //  openMainActivity();
             //updateUI(account);

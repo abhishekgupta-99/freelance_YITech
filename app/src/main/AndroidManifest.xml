@@ -16,8 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".DropDownMenus"></activity>
-        <!-- <activity android:name="com.freelance.school_attendance.AppIntro" -->
+        <activity android:name=".SchoolLogin"></activity>
+        <activity android:name=".ChooseRole" />
+        <activity android:name=".DropDownMenus" /> <!-- <activity android:name="com.freelance.school_attendance.AppIntro" -->
         <!-- android:theme="@style/Theme.Intro" -->
         <!-- > -->
         <!-- <intent-filter> -->
@@ -38,6 +39,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
