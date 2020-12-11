@@ -33,7 +33,7 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DropDownMenus extends AppCompatActivity {
+public class ClassSubjectDropDown extends AppCompatActivity {
 
     private SmartMaterialSpinner subjectspinner;
     private SmartMaterialSpinner classspinner;

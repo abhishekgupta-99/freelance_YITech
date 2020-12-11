@@ -15,7 +15,7 @@ public class SchoolLogin extends AppCompatActivity {
     }
 
     public void goToDropDown(View view) {
-        Intent i = new Intent(this,DropDownMenus.class);
+        Intent i = new Intent(this,ClassSubjectDropDown.class);
         startActivity(i);
     }
 }
