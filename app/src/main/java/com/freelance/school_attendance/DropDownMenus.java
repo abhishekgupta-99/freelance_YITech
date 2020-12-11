@@ -2,6 +2,7 @@ package com.freelance.school_attendance;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -165,5 +166,9 @@ public class DropDownMenus extends AppCompatActivity {
 
         }
 
+    }
+
+    public void markAttendance(View view) {
+        startActivity(new Intent(this,MainActivity.class));
     }
 }

@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -38,7 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
     ProgressDialog loading;
@@ -58,7 +60,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         db = new DatabaseHelper(this);
         student = findViewById(R.id.student);
-        Button fab = findViewById(R.id.fab);
+       // Button fab = findViewById(R.id.fab);
         mRecyclerview();
         //updateUI();
         getItems();
@@ -69,13 +71,13 @@ public class MainActivity extends Activity {
 
 //Uncomment this for fav action click
 //
-        fab.setOnClickListener(new View.OnClickListener() {
+        /*fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 show_Add_Student_Dialog();
 
             }
-        });
+        });*/
 
     }
 

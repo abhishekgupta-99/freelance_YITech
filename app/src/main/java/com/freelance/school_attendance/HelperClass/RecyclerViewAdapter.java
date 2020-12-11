@@ -21,7 +21,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<Student_Item_Card> mStudentItemCardListFull;
 Context context;
    public ArrayList<Student_Item_Card> absentStudents=new ArrayList<>();
-    Status status=new Status();
+    //Status status=new Status();
     @Override
     public void onClick(View v) {
 
@@ -33,8 +33,8 @@ Context context;
         public TextView student_name;
         public TextView roll_no;
         public TextView lectures_attended;
-        public  TextView status;
-        CheckBox checkBox;
+        //public  TextView status;
+        //CheckBox checkBox;
         CircularProgressIndicator cp;
 
 
@@ -43,10 +43,10 @@ Context context;
 
             student_name = itemView.findViewById(R.id.student);
             roll_no = itemView.findViewById(R.id.roll_no);
-            checkBox= itemView.findViewById(R.id.checkbox);
+            //checkBox= itemView.findViewById(R.id.checkbox);
             cp=itemView.findViewById(R.id.circular_progress);
             lectures_attended=itemView.findViewById(R.id.lectures_attended);
-            status =itemView.findViewById(R.id.status);
+            //status =itemView.findViewById(R.id.status);
         }
     }
 
@@ -74,7 +74,7 @@ Context context;
         holder.roll_no.setText(currentItem.get_roll_no());
         holder.cp.setMaxProgress(100);
         holder.lectures_attended.setText("Lectures :"+currentItem.getPresent_lecs()+"/"+currentItem.getTotallecs());
-        holder.status.setText(status.setstatus(currentItem.getPresent_lecs(),currentItem.getTotallecs()));
+        //holder.status.setText(status.setstatus(currentItem.getPresent_lecs(),currentItem.getTotallecs()));
         holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
         holder.cp.setTextColor(Color.YELLOW);
 //        if(Integer.parseInt(currentItem.getPercent())< 75) {
@@ -92,7 +92,7 @@ Context context;
 //        }
 
 //in some cases, it will prevent unwanted situations
-        holder.checkBox.setOnCheckedChangeListener(null);
+        /*holder.checkBox.setOnCheckedChangeListener(null);
 
         //if true, your checkbox will be selected, else unselected
         holder.checkBox.setChecked(mStudentItemCardList.get(position).isSelected());
@@ -117,7 +117,7 @@ Context context;
 
             }
         });
-
+*/
 
 
 
