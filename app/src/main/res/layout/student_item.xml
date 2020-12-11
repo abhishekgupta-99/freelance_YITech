@@ -78,9 +78,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:progressColor="@color/md_green_200"
-            app:progressStrokeWidth="5dp"
+            app:progressStrokeWidth="3dp"
             app:textColor="@color/background900"
-            app:textSize="18sp" />
+            android:textAlignment="center"
+            app:textSize="10sp" />
 
         <TextView
             android:id="@+id/roll_no"
@@ -92,35 +93,36 @@
             app:layout_constraintStart_toEndOf="@+id/circular_progress"
             app:layout_constraintTop_toTopOf="@+id/circular_progress" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="#F3F3F3"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            app:cardBackgroundColor="#F3F3F3"-->
+<!--            app:cardCornerRadius="10dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp"
-                android:text="A" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingTop="5dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:paddingBottom="5dp"-->
+<!--                android:text="A" />-->
 
-        </com.google.android.material.card.MaterialCardView>
+<!--        </com.google.android.material.card.MaterialCardView>-->
 
-        <!--<CheckBox
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_margin="10dp"
-            android:id="@+id/checkbox"
-            android:buttonTint="@android:color/holo_blue_light"
-            android:layout_alignParentRight="true" />-->
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/custom_checkboxx"
+            android:buttonTint="@android:color/holo_red_dark"
+            android:layout_alignParentRight="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -2,6 +2,7 @@ package com.freelance.school_attendance;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
@@ -13,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.freelance.school_attendance.HelperClass.Student_Item_Card;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,8 +29,15 @@ public class FetchDetailsSheet {
     ArrayList<String> subjectlist = new ArrayList<String>();
     ArrayList<String> classlist = new ArrayList<String>();
     String sc_name,sc_SIN,sc_pw;
+    Context ctx;
+    CircularProgressIndicator indicator;
 
-    public void getItems(Context ctx) {
+    public FetchDetailsSheet(Context ctx,CircularProgressIndicator indicator) {
+        this.ctx=ctx;
+        this.indicator=indicator;
+    }
+
+    public void getItems() {
 
 
         final RequestQueue queue = Volley.newRequestQueue(ctx);
@@ -91,6 +100,8 @@ public class FetchDetailsSheet {
             create_ArrayList(teacherarray,teacherlist);
             create_ArrayList(classarray,classlist);
             create_ArrayList(subjectarray,subjectlist);
+
+            indicator.setVisibility(View.GONE);
 
           // initSpinner();
 

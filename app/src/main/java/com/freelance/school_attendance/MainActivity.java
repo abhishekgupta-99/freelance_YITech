@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<Student_Item_Card> student_list;
     String absent_roll_nos = "";
     TextView student;
+    TextView teacher, class_div, subject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         db = new DatabaseHelper(this);
         student = findViewById(R.id.student);
-       // Button fab = findViewById(R.id.fab);
+        teacher=findViewById(R.id.tv_teacher);
+        class_div=findViewById(R.id.tv_class);
+        subject=findViewById(R.id.tv_sub);
+       // Button fab = findViewById(R.id.fab)
+        getextraIntentData();
         mRecyclerview();
         //updateUI();
         getItems();
@@ -79,6 +84,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+    }
+
+    private void getextraIntentData() {
+
+        Intent iin= getIntent();
+        Bundle b = iin.getExtras();
+
+
+        if(b!=null)
+        {
+            String t ="Teacher : "+ (String) b.getString("Teacher");
+            String c ="Class : "+ (String) b.getString("Class");
+            String s ="Subject : "+(String) b.getString("Subject");
+          teacher.setText(t);
+          class_div.setText(c);
+          subject.setText(s);
+        }
     }
 
     private void getItems() {

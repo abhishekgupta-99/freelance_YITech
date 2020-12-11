@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/tv_teacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/tv_class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -55,20 +55,20 @@
         android:text="Class : 7B"
         android:textColor="@color/background900"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintStart_toStartOf="@+id/tv_teacher"
+        app:layout_constraintTop_toBottomOf="@+id/tv_teacher" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/tv_sub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/poppins_light"
-        android:text="Date :  9/12/2020"
+        android:text="Subject :  "
         android:textColor="@color/background900"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintStart_toStartOf="@+id/tv_class"
+        app:layout_constraintTop_toBottomOf="@+id/tv_class" />
 
 
     <Button
@@ -104,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sub"
         tools:layout_editor_absoluteX="188dp">
 
         <TextView

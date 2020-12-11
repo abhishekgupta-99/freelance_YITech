@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/ed_scname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -58,8 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Please login to your account"
-        app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintStart_toStartOf="@+id/ed_scname"
+        app:layout_constraintTop_toBottomOf="@+id/ed_scname" />
 
     <Button
         android:id="@+id/buttoncontinue"
@@ -89,6 +89,23 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11"
         tools:context=".DropDownMenus"
         tools:layout_editor_absoluteX="-61dp">
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/teacherspinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:smsp_floatingLabelColor="@color/md_blue_200"
+            app:smsp_hint="Select Teacher Name"
+            app:smsp_hintColor="#C5C5C5"
+            app:smsp_hintSize="20sp"
+            app:smsp_isReSelectable="true"
+            app:smsp_isSearchable="true"
+            app:smsp_itemColor="@color/background900"
+            app:smsp_itemListColor="@color/background900"
+            app:smsp_itemListHintBackgroundColor="#808080"
+            app:smsp_itemListHintColor="#FFFFFF"
+            app:smsp_multilineError="false"
+            app:smsp_selectedItemListColor="@color/md_blue_200" />
 
         <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
             android:id="@+id/classspinner"
@@ -126,15 +143,16 @@
 
     </LinearLayout>
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        app:indicatorColor="#2196F3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <com.google.android.material.progressindicator.CircularProgressIndicator-->
+<!--        android:id="@+id/indicator"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:indeterminate="true"-->
+<!--        app:indicatorColor="#2196F3"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

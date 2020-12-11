@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.freelance.school_attendance.HelperClass.RecyclerViewAdapter;
 import com.freelance.school_attendance.HelperClass.Student_Item_Card;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,61 +39,73 @@ import java.util.List;
 public class ClassSubjectDropDown extends AppCompatActivity {
 
     private SmartMaterialSpinner subjectspinner;
-    private SmartMaterialSpinner classspinner;
+    TextView sc_name;
+    private SmartMaterialSpinner classspinner,teacherspinner;
     private List<String> provinceList;
     FetchDetailsSheet info;
+    String selected_class, selected_teacher, selected_subject;
+    ArrayList<String> teacherlist = new ArrayList<String>();
+    ArrayList<String> subjectlist = new ArrayList<String>();
+    ArrayList<String> classlist = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drop_down_menus);
 
-         info= new FetchDetailsSheet();
-        info.getItems(this);
+        sc_name=findViewById(R.id.ed_scname);
+        CircularProgressIndicator indicator = findViewById(R.id.indicator);
+
+
+       //  info= new FetchDetailsSheet(this,indicator);
+        //info.getItems();
+        getIntentExtrasData();
         initSpinner();
 
       //  getItems();
 
     }
 
+    private void getIntentExtrasData() {
+
+        Intent iin= getIntent();
+        Bundle b = iin.getExtras();
+
+        if(b!=null)
+        {
+            String j =(String) b.get("School name");
+            teacherlist= (ArrayList<String>) getIntent().getSerializableExtra("Teacherlist");
+            subjectlist= (ArrayList<String>) getIntent().getSerializableExtra("Classlist");
+            classlist= (ArrayList<String>) getIntent().getSerializableExtra("Subjectlist");
+
+            sc_name.setText(j);
+        }
+    }
+
 
     private void initSpinner() {
         subjectspinner = findViewById(R.id.subjectspinner);
         classspinner = findViewById(R.id.classspinner);
+        teacherspinner= findViewById(R.id.teacherspinner);
 
 
         provinceList = new ArrayList<>();
 
-//        provinceList.add("Kampong Thom");
-//        provinceList.add("Kampong Cham");
-//        provinceList.add("Kampong Chhnang");
-//        provinceList.add("Phnom Penh");
-//        provinceList.add("Kandal");
-//        provinceList.add("Kampot");
 
 
 
 
+        subjectspinner.setItem(subjectlist);
+        classspinner.setItem(classlist);
+        teacherspinner.setItem(teacherlist);
 
 
-        subjectspinner.setItem(info.subjectlist);
-        classspinner.setItem(info.classlist);
-
-        CircularProgressIndicator indicator = findViewById(R.id.indicator);
-        indicator.setVisibility(View.GONE);
+        //indicator.setVisibility(View.GONE);
         LinearLayout linearLayout = findViewById(R.id.linearLayout);
         linearLayout.setVisibility(View.VISIBLE);
 
-        subjectspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-               // Toast.makeText(this, provinceList.get(position).toString(), Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
     }
 
     private void getItems() {
@@ -175,6 +189,66 @@ public class ClassSubjectDropDown extends AppCompatActivity {
     }
 
     public void markAttendance(View view) {
-        startActivity(new Intent(this,MainActivity.class));
+
+        confirm_dropdown_selected();
+
+    }
+
+    private void confirm_dropdown_selected() {
+
+        subjectspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                     selected_subject=info.subjectlist.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(ClassSubjectDropDown.this, "Please Select From the Drop Down", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        classspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                selected_class=info.classlist.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(ClassSubjectDropDown.this, "Please Select From the Drop Down", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        Log.d("SELECTEEED",teacherspinner.getSelectedItem()+"");
+
+
+        teacherspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+               selected_teacher=info.teacherlist.get(position);
+                Toast.makeText(ClassSubjectDropDown.this, info.teacherlist.get(position), Toast.LENGTH_SHORT).show();
+               Log.d("SELECTEDD", selected_teacher);
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(ClassSubjectDropDown.this, "Please Select From the Drop Down", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        selected_teacher=teacherspinner.getSelectedItem()+"";
+        selected_class=classspinner.getSelectedItem()+"";
+        selected_subject=subjectspinner.getSelectedItem()+"";
+
+
+        Intent i =new Intent(this,MainActivity.class);
+        i.putExtra("Teacher", selected_teacher);
+        i.putExtra("Class", selected_class);
+        i.putExtra("Subject", selected_subject);
+        startActivity(i);
     }
 }

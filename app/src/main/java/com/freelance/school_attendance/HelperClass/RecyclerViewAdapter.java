@@ -34,7 +34,7 @@ Context context;
         public TextView roll_no;
         public TextView lectures_attended;
         //public  TextView status;
-        //CheckBox checkBox;
+        CheckBox checkBox;
         CircularProgressIndicator cp;
 
 
@@ -43,7 +43,7 @@ Context context;
 
             student_name = itemView.findViewById(R.id.student);
             roll_no = itemView.findViewById(R.id.roll_no);
-            //checkBox= itemView.findViewById(R.id.checkbox);
+            checkBox= itemView.findViewById(R.id.custom_checkboxx);
             cp=itemView.findViewById(R.id.circular_progress);
             lectures_attended=itemView.findViewById(R.id.lectures_attended);
             //status =itemView.findViewById(R.id.status);
@@ -76,7 +76,7 @@ Context context;
         holder.lectures_attended.setText("Lectures :"+currentItem.getPresent_lecs()+"/"+currentItem.getTotallecs());
         //holder.status.setText(status.setstatus(currentItem.getPresent_lecs(),currentItem.getTotallecs()));
         holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
-        holder.cp.setTextColor(Color.YELLOW);
+        holder.cp.setTextColor(Color.BLACK);
 //        if(Integer.parseInt(currentItem.getPercent())< 75) {
 //            holder.cp.setTextColor(Color.RED);
 //          //  holder.cp.setGradient(gradientType, Color.RED);
@@ -92,9 +92,9 @@ Context context;
 //        }
 
 //in some cases, it will prevent unwanted situations
-        /*holder.checkBox.setOnCheckedChangeListener(null);
+        holder.checkBox.setOnCheckedChangeListener(null);
 
-        //if true, your checkbox will be selected, else unselected
+        //if true, your custom_checkbox will be selected, else unselected
         holder.checkBox.setChecked(mStudentItemCardList.get(position).isSelected());
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -117,7 +117,7 @@ Context context;
 
             }
         });
-*/
+
 
 
 
