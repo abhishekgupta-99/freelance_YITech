@@ -18,54 +18,6 @@
         app:srcCompat="@drawable/ic_round_arrow_back_ios_24"
         app:tint="#4A89F3" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:padding="14dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        tools:context=".DropDownMenus"
-        tools:layout_editor_absoluteX="-61dp">
-
-        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-            android:id="@+id/classspinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:smsp_floatingLabelColor="#1976D2"
-            app:smsp_hint="Select Subject"
-            app:smsp_hintColor="#388E3C"
-            app:smsp_hintSize="20sp"
-            app:smsp_isReSelectable="true"
-            app:smsp_isSearchable="true"
-            app:smsp_itemColor="#512DA8"
-            app:smsp_itemListColor="#7C4DFF"
-            app:smsp_itemListHintBackgroundColor="#808080"
-            app:smsp_itemListHintColor="#FFFFFF"
-            app:smsp_multilineError="false"
-            app:smsp_selectedItemListColor="#2196F3" />
-
-        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-            android:id="@+id/subjectspinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:smsp_floatingLabelColor="#1976D2"
-            app:smsp_hint="Select Class"
-            app:smsp_hintColor="#388E3C"
-            app:smsp_hintSize="20sp"
-            app:smsp_isReSelectable="true"
-            app:smsp_isSearchable="true"
-            app:smsp_itemColor="#512DA8"
-            app:smsp_itemListColor="#7C4DFF"
-            app:smsp_itemListHintBackgroundColor="#808080"
-            app:smsp_itemListHintColor="#FFFFFF"
-            app:smsp_multilineError="false"
-            app:smsp_selectedItemListColor="#FF5252" />
-
-    </LinearLayout>
-
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="100dp"
@@ -73,7 +25,7 @@
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:srcCompat="@drawable/school" />
+        android:src="@drawable/school" />
 
     <TextView
         android:id="@+id/textView9"
@@ -110,18 +62,78 @@
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttoncontinue"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:text="CONTINUE"
         android:textSize="18sp"
-        app:backgroundTint="#4A89F3"
+        app:backgroundTint="#2196F3"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="14dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        tools:context=".DropDownMenus"
+        tools:layout_editor_absoluteX="-61dp">
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/classspinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:smsp_floatingLabelColor="@color/md_blue_200"
+            app:smsp_hint="Select Subject"
+            app:smsp_hintColor="#C5C5C5"
+            app:smsp_hintSize="20sp"
+            app:smsp_isReSelectable="true"
+            app:smsp_isSearchable="true"
+            app:smsp_itemColor="@color/background900"
+            app:smsp_itemListColor="@color/background900"
+            app:smsp_itemListHintBackgroundColor="#808080"
+            app:smsp_itemListHintColor="#FFFFFF"
+            app:smsp_multilineError="false"
+            app:smsp_selectedItemListColor="@color/md_blue_200" />
+
+        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
+            android:id="@+id/subjectspinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:smsp_floatingLabelColor="@color/md_blue_200"
+            app:smsp_hint="Select Class"
+            app:smsp_hintColor="#C5C5C5"
+            app:smsp_hintSize="20sp"
+            app:smsp_isReSelectable="true"
+            app:smsp_isSearchable="true"
+            app:smsp_itemColor="@color/background900"
+            app:smsp_itemListColor="@color/background900"
+            app:smsp_itemListHintBackgroundColor="#808080"
+            app:smsp_itemListHintColor="#FFFFFF"
+            app:smsp_multilineError="false"
+            app:smsp_selectedItemListColor="@color/md_blue_200" />
+
+    </LinearLayout>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:indicatorColor="#2196F3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

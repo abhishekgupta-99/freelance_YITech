@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
@@ -20,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
 import com.freelance.school_attendance.HelperClass.RecyclerViewAdapter;
 import com.freelance.school_attendance.HelperClass.Student_Item_Card;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +33,7 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DropDownMenus extends Activity {
+public class DropDownMenus extends AppCompatActivity {
 
     private SmartMaterialSpinner subjectspinner;
     private SmartMaterialSpinner classspinner;
@@ -65,6 +69,11 @@ public class DropDownMenus extends Activity {
 
         subjectspinner.setItem(subjectlist);
         classspinner.setItem(classlist);
+
+        CircularProgressIndicator indicator = findViewById(R.id.indicator);
+        indicator.setVisibility(View.GONE);
+        LinearLayout linearLayout = findViewById(R.id.linearLayout);
+        linearLayout.setVisibility(View.VISIBLE);
 
         subjectspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -121,7 +130,6 @@ public class DropDownMenus extends Activity {
             }
         };
         queue.add(stringRequest);
-
 
     }
 
