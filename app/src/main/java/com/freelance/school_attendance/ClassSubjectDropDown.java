@@ -76,8 +76,8 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         {
             String j =(String) b.get("School name");
             teacherlist= (ArrayList<String>) getIntent().getSerializableExtra("Teacherlist");
-            subjectlist= (ArrayList<String>) getIntent().getSerializableExtra("Classlist");
-            classlist= (ArrayList<String>) getIntent().getSerializableExtra("Subjectlist");
+            subjectlist= (ArrayList<String>) getIntent().getSerializableExtra("Subjectlist");
+            classlist= (ArrayList<String>) getIntent().getSerializableExtra("Classlist");
 
             sc_name.setText(j);
         }
