@@ -65,7 +65,7 @@ public class AppIntro extends Activity {
 
    public void openMainActivity()
     {
-        Intent i=new Intent(this, DropDownMenus.class);
+        Intent i=new Intent(this, ClassSubjectDropDown.class);
         startActivity(i);
     }
 

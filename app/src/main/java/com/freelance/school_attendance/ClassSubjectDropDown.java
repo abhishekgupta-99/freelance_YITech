@@ -38,15 +38,18 @@ public class ClassSubjectDropDown extends AppCompatActivity {
     private SmartMaterialSpinner subjectspinner;
     private SmartMaterialSpinner classspinner;
     private List<String> provinceList;
-    ArrayList<String> teacherlist = new ArrayList<String>();
-    ArrayList<String> subjectlist = new ArrayList<String>();
-    ArrayList<String> classlist = new ArrayList<String>();
+    FetchDetailsSheet info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drop_down_menus);
-        getItems();
+
+         info= new FetchDetailsSheet();
+        info.getItems(this);
+        initSpinner();
+
+      //  getItems();
 
     }
 
@@ -58,17 +61,20 @@ public class ClassSubjectDropDown extends AppCompatActivity {
 
         provinceList = new ArrayList<>();
 
-        provinceList.add("Kampong Thom");
-        provinceList.add("Kampong Cham");
-        provinceList.add("Kampong Chhnang");
-        provinceList.add("Phnom Penh");
-        provinceList.add("Kandal");
-        provinceList.add("Kampot");
+//        provinceList.add("Kampong Thom");
+//        provinceList.add("Kampong Cham");
+//        provinceList.add("Kampong Chhnang");
+//        provinceList.add("Phnom Penh");
+//        provinceList.add("Kandal");
+//        provinceList.add("Kampot");
 
 
 
-        subjectspinner.setItem(subjectlist);
-        classspinner.setItem(classlist);
+
+
+
+        subjectspinner.setItem(info.subjectlist);
+        classspinner.setItem(info.classlist);
 
         CircularProgressIndicator indicator = findViewById(R.id.indicator);
         indicator.setVisibility(View.GONE);
@@ -144,9 +150,9 @@ public class ClassSubjectDropDown extends AppCompatActivity {
             JSONArray classarray = jobj.getJSONArray("classes");
             JSONArray subjectarray = jobj.getJSONArray("subjects");
 
-            create_ArrayList(teacherarray,teacherlist);
-            create_ArrayList(classarray,classlist);
-            create_ArrayList(subjectarray,subjectlist);
+//            create_ArrayList(teacherarray,teacherlist);
+//            create_ArrayList(classarray,classlist);
+//            create_ArrayList(subjectarray,subjectlist);
 
             initSpinner();
 

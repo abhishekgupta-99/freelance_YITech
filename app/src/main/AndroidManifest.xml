@@ -18,7 +18,7 @@
         tools:replace="android:allowBackup">
         <activity android:name=".SchoolLogin"></activity>
         <activity android:name=".ChooseRole" />
-        <activity android:name=".DropDownMenus" /> <!-- <activity android:name="com.freelance.school_attendance.AppIntro" -->
+        <activity android:name=".ClassSubjectDropDown" /> <!-- <activity android:name="com.freelance.school_attendance.AppIntro" -->
         <!-- android:theme="@style/Theme.Intro" -->
         <!-- > -->
         <!-- <intent-filter> -->
