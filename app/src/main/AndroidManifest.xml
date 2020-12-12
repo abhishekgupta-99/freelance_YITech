@@ -26,9 +26,7 @@
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
-        <activity android:name=".Student_CRUD" />
         <activity android:name=".DateTime" />
-        <activity android:name=".subjects_viewpager" />
         <activity android:name=".MainActivity" />
         <activity
             android:name=".AppIntro"

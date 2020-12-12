@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     String absent_roll_nos = "";
     TextView student;
     TextView teacher, class_div, subject;
-    String t,c,s;
+    String t,c,s,class_gs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         if(b!=null)
         {
              t ="Teacher : "+ (String) b.getString("Teacher");
+             class_gs=(String) b.getString("Class");
              c ="Class : "+ (String) b.getString("Class");
              s ="Subject : "+(String) b.getString("Subject");
           teacher.setText(t);
@@ -107,58 +108,15 @@ public class MainActivity extends AppCompatActivity {
     private void getItems() {
 
         loading = ProgressDialog.show(this, "Loading", "Updating App", false, true);
-
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//
-//        String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
-
-//        CacheRequest cacheRequest = new CacheRequest(0, url, new Response.Listener<NetworkResponse>() {
-//            @Override
-//            public void onResponse(NetworkResponse response) {
-//                try {
-//                    final String jsonString = new String(response.data,
-//                            HttpHeaderParser.parseCharset(response.headers));
-//                    //  JSONObject jsonObject = new JSONObject(jsonString);
-//                    parseItems(jsonString);
-//                    // textView.setText(jsonObject.toString(5));
-//                    // Toast.makeText(mContext, "onResponse:\n\n" + jsonObject.toString(), Toast.LENGTH_SHORT).show();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(MainActivity.this, "onErrorResponse:\n\n" + error.toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        })
-//        {
-//            @Override
-//            public void deliverError(VolleyError error) {
-//                if (error instanceof NoConnectionError) {
-//                    Cache.Entry entry = this.getCacheEntry();
-//                    if(entry != null) {
-//                        Response<NetworkResponse> response = parseNetworkResponse(new NetworkResponse(HttpURLConnection.HTTP_OK,
-//                                entry.data, false, 0, entry.allResponseHeaders));
-//                        deliverResponse(response.result);
-//                        return;
-//                    }
-//                }
-//                super.deliverError(error);
-//            }
-//        };
-//
-//        // Add the request to the RequestQueue.
-//        queue.add(cacheRequest);
-//    }
-
-
+        loading.setCanceledOnTouchOutside(false);
+        loading.setCancelable(false);
 ////////////////////////////////////////////////////////////////////////////Working////////////
         final RequestQueue queue = Volley.newRequestQueue(this);
    // original     final String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
      // original  StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems",
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, getString(R.string.Slave_gs_url)+"?action=getItems",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, getString(R.string.Slave_gs_url)+"?action=getItems&class="+class_gs,
                 new Response.Listener<String>() {
+
 
                     @Override
                     public void onResponse(String response) {
@@ -167,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 //                        queue.getCache().put(response,entry);
                        // queue.getCache().invalidate(url,true);
 
-                        Log.d("ANSRESPONSE",response);
+//                        Log.d("ANSRESPONSE",response);
                     }
                 },
 
@@ -175,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                       @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                          Toast.makeText(MainActivity.this, "Could not fetch details ! ", Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -187,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
                     if(entry != null) {
                         Response<String> response = parseNetworkResponse(new NetworkResponse(HttpURLConnection.HTTP_OK,
                                 entry.data, false, 0, entry.allResponseHeaders));
-                        Log.d("FAILEDCACHE",response.toString());
                         deliverResponse(response.result);
                         return;
                     }
@@ -203,6 +161,11 @@ public class MainActivity extends AppCompatActivity {
 //        stringRequest.setRetryPolicy(policy);
 
       //  RequestQueue queue = Volley.newRequestQueue(this);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                2,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         queue.add(stringRequest);
 
 
@@ -318,40 +281,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void show_Add_Student_Dialog() {
-        final Dialog dialog= new Dialog(MainActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.addstudent_dialog);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(true);
-        WindowManager.LayoutParams lp=new WindowManager.LayoutParams();
-        lp.width=WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height=WindowManager.LayoutParams.WRAP_CONTENT;
-        dialog.show();
-        dialog.getWindow().setAttributes(lp);
-        final EditText et_studentname= (EditText)dialog.findViewById(R.id.studentname);
-        final EditText et_studentrollno= (EditText)dialog.findViewById(R.id.roll_no);
-        //final String student_name_et;
-
-        //Here dialog.findviewbyid plays an important role
-
-        Button add_student=(Button) dialog.findViewById(R.id.addstudent) ;
-        add_student.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String student_name_et= et_studentname.getText().toString();
-                String student_rollno_et=et_studentrollno.getText().toString();
-                Toast.makeText(getApplicationContext(), student_name_et, Toast.LENGTH_SHORT).show();
-                Log.d("EDITTEXT",student_name_et);
-
-                add_Student(student_name_et,student_rollno_et,dialog);
-            }
-
-        });
-
-
-    }
 
 //    private ArrayList<Student_Item_Card> dataset() {
 //
@@ -370,14 +299,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void add_Student(String sn,String rn,Dialog dg) {
-
-       // createNote(sn,rn);
-       dg.dismiss();
-       updateUI();
-
-    }
-
 
 
 
@@ -393,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         loading.dismiss();
                         mAdapter.empty_absentStudents();
-                        Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
                         absent_roll_nos="";
                         getItems();
                         //  Intent intent = new Intent(getApplicationContext(),MainActivity.class);
@@ -417,9 +338,8 @@ public class MainActivity extends AppCompatActivity {
                 parmas.put("action", "addItem");
                 Log.d("absentrolls",absent_roll_nos+"");
                 parmas.put("absent", absent_roll_nos);
-                parmas.put("class",c);
+                parmas.put("class",class_gs);
 
-                //Toast.makeText(MainActivity.this, name, Toast.LENGTH_SHORT).show();
 
 
                 return parmas;
@@ -445,7 +365,6 @@ public class MainActivity extends AppCompatActivity {
         {
             String absent_rollno=absent_students.get(i).get_roll_no();
             absent_roll_nos=absent_roll_nos+","+absent_rollno;
-            Log.d("absent_rollno",absent_roll_nos);
         }
         update_absent_students_GOOGLESHEET();
     }

@@ -199,7 +199,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         subjectspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                     selected_subject=info.subjectlist.get(position);
+                    // selected_subject=info.subjectlist.get(position);
             }
 
             @Override
@@ -211,7 +211,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         classspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                selected_class=info.classlist.get(position);
+              //  selected_class=info.classlist.get(position);
             }
 
             @Override
@@ -221,15 +221,15 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         });
 
 
-        Log.d("SELECTEEED",teacherspinner.getSelectedItem()+"");
+       // Log.d("SELECTEEED",teacherspinner.getSelectedItem()+"");
 
 
         teacherspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-               selected_teacher=info.teacherlist.get(position);
-                Toast.makeText(ClassSubjectDropDown.this, info.teacherlist.get(position), Toast.LENGTH_SHORT).show();
-               Log.d("SELECTEDD", selected_teacher);
+              // selected_teacher=info.teacherlist.get(position);
+               // Toast.makeText(ClassSubjectDropDown.this, info.teacherlist.get(position), Toast.LENGTH_SHORT).show();
+             //  Log.d("SELECTEDD", selected_teacher);
             }
 
 

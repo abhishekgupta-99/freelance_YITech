@@ -23,11 +23,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-import io.github.dreierf.materialintroscreen.MaterialIntroActivity;
-import io.github.dreierf.materialintroscreen.MessageButtonBehaviour;
-import io.github.dreierf.materialintroscreen.SlideFragmentBuilder;
-
-import static com.freelance.school_attendance.Student_CRUD.context;
 
 
 public class AppIntro extends Activity {

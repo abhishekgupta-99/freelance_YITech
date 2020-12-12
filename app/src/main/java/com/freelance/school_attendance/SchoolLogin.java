@@ -21,6 +21,7 @@ public class SchoolLogin extends AppCompatActivity {
         SIN=(TextInputEditText) findViewById(R.id.ed_sin);
         pw= (TextInputEditText)findViewById(R.id.ed_pw);
         CircularProgressIndicator indicator = findViewById(R.id.indicator);
+        indicator.setClickable(false);
         info= new FetchDetailsSheet(this, indicator);
         info.getItems();
        // initSpinner();
