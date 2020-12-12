@@ -1,52 +1,6 @@
 <resources>
     <string name="app_name">School Attendance Management App</string>
+    <string name="Slave_gs_url">https://script.google.com/macros/s/AKfycbwMm9it49GXvvzYbH5Pv59skrqJ9Zk8jkdav10j-nIJQuEnGSi9/exec</string>
+    <string name="Master_gs_url">School Attendance Management App</string>
 
-    <string name="title_1">PCS</string>
-    <string name="title_2">SS</string>
-    <string name="title_3">FCE</string>
-    <string name="title_4">MATHS</string>
-
-    <string name="text_1">Please Select Your Subject</string>
-
-    <string name="add">Add A Student</string>
-    <string name="delete">Delete A Student</string>
-    <string name="update">Update A Student</string>
-
-
-    <string-array name="questions1">
-        <item>What is your favourite color?</item>
-        <item>What is your favourite food?</item>
-        <item>What is your favourite pet`s name?</item>
-        <item>What is your favourite coffee?</item>
-        <item>Why Kotlin?</item>
-    </string-array>
-
-    <string-array name="coffee">
-        <item>Americano</item>
-        <item>Cold Brew</item>
-        <item>Espresso</item>
-        <item>Latte</item>
-        <item>Cappuccino</item>
-        <item>Mocha</item>
-        <item>Affogato</item>
-        <item>Hot Chocolate</item>
-    </string-array>
-
-    <string-array name="colors">
-        <item>red</item>
-        <item>orange</item>
-        <item>yellow</item>
-        <item>green</item>
-        <item>blue</item>
-        <item>purple</item>
-    </string-array>
-
-    <string-array name="items">
-        <item>Item0</item>
-        <item>Item1</item>
-        <item>Item2</item>
-        <item>Item3</item>
-        <item>Item4</item>
-        <item>Item5</item>
-    </string-array>
 </resources>

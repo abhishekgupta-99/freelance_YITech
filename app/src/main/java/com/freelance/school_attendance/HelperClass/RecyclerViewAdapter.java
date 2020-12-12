@@ -75,7 +75,16 @@ Context context;
         holder.cp.setMaxProgress(100);
         holder.lectures_attended.setText("Lectures :"+currentItem.getPresent_lecs()+"/"+currentItem.getTotallecs());
         //holder.status.setText(status.setstatus(currentItem.getPresent_lecs(),currentItem.getTotallecs()));
-        holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
+        try
+        {
+            holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
+        }
+        catch (Exception e)
+        {
+            holder.cp.setCurrentProgress(0);
+
+        }
+//        holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
         holder.cp.setTextColor(Color.BLACK);
 //        if(Integer.parseInt(currentItem.getPercent())< 75) {
 //            holder.cp.setTextColor(Color.RED);
@@ -105,7 +114,7 @@ Context context;
                 if(mStudentItemCardList.get(holder.getAdapterPosition()).isSelected()){
                    // mStudentItemCardList.get(pos).setSelected(true);
                     absentStudents.add(mStudentItemCardList.get(holder.getAdapterPosition()));
-                    Toast.makeText(context, absentStudents.toString(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(context, absentStudents.toString(), Toast.LENGTH_SHORT).show();
                 }
                 else if(!mStudentItemCardList.get(holder.getAdapterPosition()).isSelected())
                 {

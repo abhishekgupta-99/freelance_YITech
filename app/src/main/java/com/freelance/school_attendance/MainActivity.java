@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     String absent_roll_nos = "";
     TextView student;
     TextView teacher, class_div, subject;
+    String t,c,s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(b!=null)
         {
-            String t ="Teacher : "+ (String) b.getString("Teacher");
-            String c ="Class : "+ (String) b.getString("Class");
-            String s ="Subject : "+(String) b.getString("Subject");
+             t ="Teacher : "+ (String) b.getString("Teacher");
+             c ="Class : "+ (String) b.getString("Class");
+             s ="Subject : "+(String) b.getString("Subject");
           teacher.setText(t);
           class_div.setText(c);
           subject.setText(s);
@@ -154,8 +155,9 @@ public class MainActivity extends AppCompatActivity {
 
 ////////////////////////////////////////////////////////////////////////////Working////////////
         final RequestQueue queue = Volley.newRequestQueue(this);
-        final String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems",
+   // original     final String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
+     // original  StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, getString(R.string.Slave_gs_url)+"?action=getItems",
                 new Response.Listener<String>() {
 
                     @Override
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                         parseItems(response);
 //                        Cache.Entry entry = new Cache.Entry();
 //                        queue.getCache().put(response,entry);
-                        queue.getCache().invalidate(url,true);
+                       // queue.getCache().invalidate(url,true);
 
                         Log.d("ANSRESPONSE",response);
                     }
@@ -366,63 +368,26 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
-    private void createNote(String name,String rno) {
-        // inserting note in db and getting
-        // newly inserted note id
-        try {
-            long id = db.insertStudent(name,rno);
-            Toast.makeText(this, id+"", Toast.LENGTH_SHORT).show();
-            Log.d("IDDD",id+"");
 
-            Student stu = db.getStudent(id);
-            if(stu!=null)
-            {
-                Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
-            }
-        }
-        catch (Exception e)
-        {//Check error in this ,code entering exception
-         //   Toast.makeText(this, "Failed adding student", Toast.LENGTH_SHORT).show();
-        }
-        // get the newly inserted note from db
-
-
-    }
 
     public void add_Student(String sn,String rn,Dialog dg) {
 
-        createNote(sn,rn);
+       // createNote(sn,rn);
        dg.dismiss();
        updateUI();
 
     }
 
-    public void Update_Sheet(View view) {
 
-     ArrayList<Student_Item_Card> absent_students=  mAdapter.absentstudents();
-    // String absent_roll_nos="";
-
-     for (int i=0;i<absent_students.size();i++)
-     {
-         String absent_rollno=absent_students.get(i).get_roll_no();
-         absent_roll_nos=absent_roll_nos+","+absent_rollno;
-         Log.d("absent_rollno",absent_roll_nos);
-     }
-        update_absent_students_GOOGLESHEET();
-    }
-
-    public void student_crud(View view) {
-        Intent i=new Intent(this,Student_CRUD.class);
-        startActivity(i);
-        finish();
-
-    }
 
 
     public void update_absent_students_GOOGLESHEET()
     {
+
+        //https://script.google.com/macros/s/AKfycbzpTPG7TKiURwb017csK3aoBKakNUgmSf7utYSQuqixIqVLz3Q/exec
         final ProgressDialog loading = ProgressDialog.show(this,"Adding Details to Google Sheet","Please wait");
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec",
+    //original url    StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec",
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.Slave_gs_url),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -450,9 +415,13 @@ public class MainActivity extends AppCompatActivity {
                 //here we pass params
 
                 parmas.put("action", "addItem");
+                Log.d("absentrolls",absent_roll_nos+"");
                 parmas.put("absent", absent_roll_nos);
+                parmas.put("class",c);
 
                 //Toast.makeText(MainActivity.this, name, Toast.LENGTH_SHORT).show();
+
+
                 return parmas;
             }
         };
@@ -468,4 +437,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void Update_Google_Sheet(View view) {
+
+        ArrayList<Student_Item_Card> absent_students=  mAdapter.absentstudents();
+
+        for (int i=0;i<absent_students.size();i++)
+        {
+            String absent_rollno=absent_students.get(i).get_roll_no();
+            absent_roll_nos=absent_roll_nos+","+absent_rollno;
+            Log.d("absent_rollno",absent_roll_nos);
+        }
+        update_absent_students_GOOGLESHEET();
+    }
 }
