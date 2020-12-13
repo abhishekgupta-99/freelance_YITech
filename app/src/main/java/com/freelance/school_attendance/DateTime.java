@@ -1,12 +1,15 @@
 package com.freelance.school_attendance;
+
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import java.util.Calendar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Calendar;
 
 
 public class DateTime extends AppCompatActivity {
@@ -15,14 +18,14 @@ public class DateTime extends AppCompatActivity {
     final Calendar c = Calendar.getInstance();
     int hr = c.get(Calendar.HOUR_OF_DAY);
     int min = c.get(Calendar.MINUTE);
-   TextView view;
+    TextView view;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_date_time);
-     view=findViewById(R.id.time);
+        view = findViewById(R.id.time);
 
 
     }
@@ -33,11 +36,10 @@ public class DateTime extends AppCompatActivity {
     }
 
 
-
     protected Dialog createdDialog() {
 
-                return new TimePickerDialog(DateTime.this, timePickerListener, hr, min, false);
-         }
+        return new TimePickerDialog(DateTime.this, timePickerListener, hr, min, false);
+    }
 
     public TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
@@ -45,26 +47,28 @@ public class DateTime extends AppCompatActivity {
 // TODO Auto-generated method stub
             hr = hourOfDay;
             min = minutes;
-          //  updateTime(hr, min);
+            //  updateTime(hr, min);
         }
     };
+
     private static String utilTime(int value) {
-        if (value < 10) return "0" + String.valueOf(value); else return String.valueOf(value); }
+        if (value < 10) return "0" + value;
+        else return String.valueOf(value);
+    }
 
 
-        public void updateTime(int hours, int mins,TextView view)
-        {
-            String timeSet = "";
-            if (hours > 12) {
-        hours -= 12;
-        timeSet = "PM";
-    } else if (hours == 0) {
-        hours += 12;
-        timeSet = "AM";
-    } else if (hours == 12)
-        timeSet = "PM";
-    else
-        timeSet = "AM";
+    public void updateTime(int hours, int mins, TextView view) {
+        String timeSet = "";
+        if (hours > 12) {
+            hours -= 12;
+            timeSet = "PM";
+        } else if (hours == 0) {
+            hours += 12;
+            timeSet = "AM";
+        } else if (hours == 12)
+            timeSet = "PM";
+        else
+            timeSet = "AM";
         String minutes = "";
         if (mins < 10)
             minutes = "0" + mins;

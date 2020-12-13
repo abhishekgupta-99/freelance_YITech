@@ -24,18 +24,18 @@ public class Student {
                     + COLUMN_NOTE + " TEXT,"
                     + COLUMN_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
                     + COLUMN_Last_Attendance + " TEXT,"
-                    + COLUMN_percent_Attendance +" REAL"
+                    + COLUMN_percent_Attendance + " REAL"
                     + ")";
 
     public Student() {
     }
 
-    public Student(int id, String note, String timestamp,String Last_Attendance,String percent) {
+    public Student(int id, String note, String timestamp, String Last_Attendance, String percent) {
         this.id = id;
         this.note = note;
         this.timestamp = timestamp;
-        this.Last_Attendance=Last_Attendance;
-        this.percent=percent;
+        this.Last_Attendance = Last_Attendance;
+        this.percent = percent;
     }
 
     public int getId() {

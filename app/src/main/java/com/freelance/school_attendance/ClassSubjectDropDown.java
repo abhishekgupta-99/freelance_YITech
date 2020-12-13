@@ -1,7 +1,5 @@
 package com.freelance.school_attendance;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,10 +21,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
-import com.freelance.school_attendance.HelperClass.RecyclerViewAdapter;
 import com.freelance.school_attendance.HelperClass.Student_Item_Card;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +36,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
 
     private SmartMaterialSpinner subjectspinner;
     TextView sc_name;
-    private SmartMaterialSpinner classspinner,teacherspinner;
+    private SmartMaterialSpinner classspinner, teacherspinner;
     private List<String> provinceList;
     FetchDetailsSheet info;
     String selected_class, selected_teacher, selected_subject;
@@ -55,31 +51,30 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drop_down_menus);
 
-        sc_name=findViewById(R.id.ed_scname);
+        sc_name = findViewById(R.id.ed_scname);
         CircularProgressIndicator indicator = findViewById(R.id.indicator);
 
 
-       //  info= new FetchDetailsSheet(this,indicator);
+        //  info= new FetchDetailsSheet(this,indicator);
         //info.getItems();
         getIntentExtrasData();
         initSpinner();
 
-      //  getItems();
+        //  getItems();
 
     }
 
     private void getIntentExtrasData() {
 
-        Intent iin= getIntent();
+        Intent iin = getIntent();
         Bundle b = iin.getExtras();
 
-        if(b!=null)
-        {
-            String j =(String) b.get("School name");
-            teacherlist= (ArrayList<String>) getIntent().getSerializableExtra("Teacherlist");
-            subjectlist= (ArrayList<String>) getIntent().getSerializableExtra("Subjectlist");
-            classlist= (ArrayList<String>) getIntent().getSerializableExtra("Classlist");
-            loginAs=(boolean) b.getBoolean("LoginAs");
+        if (b != null) {
+            String j = (String) b.get("School name");
+            teacherlist = (ArrayList<String>) getIntent().getSerializableExtra("Teacherlist");
+            subjectlist = (ArrayList<String>) getIntent().getSerializableExtra("Subjectlist");
+            classlist = (ArrayList<String>) getIntent().getSerializableExtra("Classlist");
+            loginAs = b.getBoolean("LoginAs");
 
             sc_name.setText(j);
         }
@@ -89,13 +84,10 @@ public class ClassSubjectDropDown extends AppCompatActivity {
     private void initSpinner() {
         subjectspinner = findViewById(R.id.subjectspinner);
         classspinner = findViewById(R.id.classspinner);
-        teacherspinner= findViewById(R.id.teacherspinner);
+        teacherspinner = findViewById(R.id.teacherspinner);
 
 
         provinceList = new ArrayList<>();
-
-
-
 
 
         subjectspinner.setItem(subjectlist);
@@ -114,7 +106,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
 
 
         final RequestQueue queue = Volley.newRequestQueue(this);
-      //  final String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
+        //  final String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbz938aPu6B_i3RootSMc4JpFKgA09uMhEyUMsK6F9BT0ijJJAAT/exec?action=getItems",
                 new Response.Listener<String>() {
 
@@ -123,7 +115,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
                         parseItems(response);
 
 
-                        Log.d("ANSRESPONSE",response);
+                        Log.d("ANSRESPONSE", response);
                     }
                 },
 
@@ -134,21 +126,19 @@ public class ClassSubjectDropDown extends AppCompatActivity {
 
                     }
                 }
-        )
-        {
+        ) {
             @Override
             public void deliverError(VolleyError error) {
                 if (error instanceof NoConnectionError) {
                     Cache.Entry entry = this.getCacheEntry();
-                    if(entry != null) {
+                    if (entry != null) {
                         Response<String> response = parseNetworkResponse(new NetworkResponse(HttpURLConnection.HTTP_OK,
                                 entry.data, false, 0, entry.allResponseHeaders));
-                        Log.d("FAILED CACHE",response.toString());
+                        Log.d("FAILED CACHE", response.toString());
                         deliverResponse(response.result);
                         return;
                     }
-                }
-                else
+                } else
                     super.deliverError(error);
             }
         };
@@ -173,7 +163,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
 
             initSpinner();
 
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -201,7 +191,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         subjectspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                    // selected_subject=info.subjectlist.get(position);
+                // selected_subject=info.subjectlist.get(position);
             }
 
             @Override
@@ -213,7 +203,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         classspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-              //  selected_class=info.classlist.get(position);
+                //  selected_class=info.classlist.get(position);
             }
 
             @Override
@@ -223,15 +213,15 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         });
 
 
-       // Log.d("SELECTEEED",teacherspinner.getSelectedItem()+"");
+        // Log.d("SELECTEEED",teacherspinner.getSelectedItem()+"");
 
 
         teacherspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-              // selected_teacher=info.teacherlist.get(position);
-               // Toast.makeText(ClassSubjectDropDown.this, info.teacherlist.get(position), Toast.LENGTH_SHORT).show();
-             //  Log.d("SELECTEDD", selected_teacher);
+                // selected_teacher=info.teacherlist.get(position);
+                // Toast.makeText(ClassSubjectDropDown.this, info.teacherlist.get(position), Toast.LENGTH_SHORT).show();
+                //  Log.d("SELECTEDD", selected_teacher);
             }
 
 
@@ -242,16 +232,16 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         });
 
 
-        selected_teacher=teacherspinner.getSelectedItem()+"";
-        selected_class=classspinner.getSelectedItem()+"";
-        selected_subject=subjectspinner.getSelectedItem()+"";
+        selected_teacher = teacherspinner.getSelectedItem() + "";
+        selected_class = classspinner.getSelectedItem() + "";
+        selected_subject = subjectspinner.getSelectedItem() + "";
 
 
-        Intent i =new Intent(this,MainActivity.class);
+        Intent i = new Intent(this, MainActivity.class);
         i.putExtra("Teacher", selected_teacher);
         i.putExtra("Class", selected_class);
         i.putExtra("Subject", selected_subject);
-        i.putExtra("LoginAs",loginAs);
+        i.putExtra("LoginAs", loginAs);
         startActivity(i);
     }
 }

@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:foreground="?attr/selectableItemBackgroundBorderless"/>
+        android:foreground="?attr/selectableItemBackgroundBorderless" />
 
     <TextView
         android:id="@+id/textView"

@@ -1,21 +1,17 @@
 package com.freelance.school_attendance;
-import android.app.Activity;
-import android.app.Dialog;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
@@ -56,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
     String absent_roll_nos = "";
     TextView student;
     TextView teacher, class_div, subject;
-    String t,c,s,class_gs;
-     boolean loginAs;
+    String t, c, s, class_gs;
+    boolean loginAs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         db = new DatabaseHelper(this);
         student = findViewById(R.id.student);
-        teacher=findViewById(R.id.tv_teacher);
-        class_div=findViewById(R.id.tv_class);
-        subject=findViewById(R.id.tv_sub);
-       // Button fab = findViewById(R.id.fab)
+        teacher = findViewById(R.id.tv_teacher);
+        class_div = findViewById(R.id.tv_class);
+        subject = findViewById(R.id.tv_sub);
+        // Button fab = findViewById(R.id.fab)
         getextraIntentData();
         mRecyclerview();
         //updateUI();
@@ -92,20 +88,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void getextraIntentData() {
 
-        Intent iin= getIntent();
+        Intent iin = getIntent();
         Bundle b = iin.getExtras();
 
 
-        if(b!=null)
-        {
-             t ="Teacher : "+ (String) b.getString("Teacher");
-             class_gs=(String) b.getString("Class");
-             c ="Class : "+ (String) b.getString("Class");
-             s ="Subject : "+(String) b.getString("Subject");
-             loginAs= (boolean) b.getBoolean("LoginAs");
-          teacher.setText(t);
-          class_div.setText(c);
-          subject.setText(s);
+        if (b != null) {
+            t = "Teacher : " + b.getString("Teacher");
+            class_gs = b.getString("Class");
+            c = "Class : " + b.getString("Class");
+            s = "Subject : " + b.getString("Subject");
+            loginAs = b.getBoolean("LoginAs");
+            teacher.setText(t);
+            class_div.setText(c);
+            subject.setText(s);
         }
     }
 
@@ -116,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
         loading.setCancelable(false);
 ////////////////////////////////////////////////////////////////////////////Working////////////
         final RequestQueue queue = Volley.newRequestQueue(this);
-   // original     final String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
-     // original  StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems",
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, getString(R.string.Slave_gs_url)+"?action=getItems&class="+class_gs,
+        // original     final String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
+        // original  StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, getString(R.string.Slave_gs_url) + "?action=getItems&class=" + class_gs,
                 new Response.Listener<String>() {
 
 
@@ -127,35 +122,33 @@ public class MainActivity extends AppCompatActivity {
                         parseItems(response);
 //                        Cache.Entry entry = new Cache.Entry();
 //                        queue.getCache().put(response,entry);
-                       // queue.getCache().invalidate(url,true);
+                        // queue.getCache().invalidate(url,true);
 
 //                        Log.d("ANSRESPONSE",response);
                     }
                 },
 
                 new Response.ErrorListener() {
-                      @Override
+                    @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                          Toast.makeText(MainActivity.this, "Could not fetch details ! ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Could not fetch details ! ", Toast.LENGTH_SHORT).show();
 
                     }
                 }
-        )
-        {
+        ) {
             @Override
             public void deliverError(VolleyError error) {
                 if (error instanceof NoConnectionError) {
                     Cache.Entry entry = this.getCacheEntry();
-                    if(entry != null) {
+                    if (entry != null) {
                         Response<String> response = parseNetworkResponse(new NetworkResponse(HttpURLConnection.HTTP_OK,
                                 entry.data, false, 0, entry.allResponseHeaders));
                         deliverResponse(response.result);
                         return;
                     }
-                }
-                else
-                super.deliverError(error);
+                } else
+                    super.deliverError(error);
             }
         };
 
@@ -164,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //        stringRequest.setRetryPolicy(policy);
 
-      //  RequestQueue queue = Volley.newRequestQueue(this);
+        //  RequestQueue queue = Volley.newRequestQueue(this);
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 0,
                 2,
@@ -200,21 +193,21 @@ public class MainActivity extends AppCompatActivity {
 //
 //
 //        Volley.newRequestQueue(MainActivity.this).add(request);
-}
+    }
 
 
     private void parseItems(String jsonResposnce) {
         ArrayList<Student_Item_Card> list = new ArrayList<Student_Item_Card>();
-      //  Log.d("jsonResponse",jsonResposnce);
+        //  Log.d("jsonResponse",jsonResposnce);
 
-     //   ArrayList<HashMap<String, String>> list = new ArrayList<>();
+        //   ArrayList<HashMap<String, String>> list = new ArrayList<>();
 
         try {
             JSONObject jobj = new JSONObject(jsonResposnce);
-            Log.d("jsonobj",jobj.toString());
+            Log.d("jsonobj", jobj.toString());
             JSONArray jarray = jobj.getJSONArray("items");
-            Integer total_lecs=jobj.getInt("total_lecs");
-            Log.d("totallecs",total_lecs+"");
+            Integer total_lecs = jobj.getInt("total_lecs");
+            Log.d("totallecs", total_lecs + "");
 
 
             for (int i = 0; i < jarray.length(); i++) {
@@ -228,23 +221,23 @@ public class MainActivity extends AppCompatActivity {
                 String json_lecs_attended = jo.getString("PresentLecs");
 
 //                Log.d("name",json_studentName);
-              //  String price = jo.getString("price");
+                //  String price = jo.getString("price");
 
                 obj.set_student_name(json_studentName);
                 obj.set_roll_no(json_rollno);
-                obj.setPercent(json_percent_Attend+"");
+                obj.setPercent(json_percent_Attend + "");
                 obj.setLast_Attendance("P");
-                obj.setTotallecs(total_lecs+"");
+                obj.setTotallecs(total_lecs + "");
                 obj.setPresent_lecs(json_lecs_attended);
-               // obj.setLast_Attendance(cursor.getString(3));
+                // obj.setLast_Attendance(cursor.getString(3));
                 //obj.setPercent(cursor.getString(4));
 
 
 //                HashMap<String, String> item = new HashMap<>();
 //                item.put("itemName", json_studentName);
 //                item.put("brand", json_rollno);
-              //  item.put("price",price);
-               // Log.d("OBJECTT",json_percent_Attend.toString());
+                //  item.put("price",price);
+                // Log.d("OBJECTT",json_percent_Attend.toString());
 
                 list.add(obj);
 
@@ -278,8 +271,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI() {
 
-        DatabaseHelper dbh=new DatabaseHelper(MainActivity.this);
-        student_list=dbh.getAllElements();
+        DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
+        student_list = dbh.getAllElements();
         // alarm_listcopy=new ArrayList<>(alarm_list);
         mAdapter = new RecyclerViewAdapter(student_list);
         mRecyclerView.setAdapter(mAdapter);
@@ -302,25 +295,19 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
-
-
-
-
-
-    public void update_absent_students_GOOGLESHEET()
-    {
+    public void update_absent_students_GOOGLESHEET() {
 
         //https://script.google.com/macros/s/AKfycbzpTPG7TKiURwb017csK3aoBKakNUgmSf7utYSQuqixIqVLz3Q/exec
-        final ProgressDialog loading = ProgressDialog.show(this,"Adding Details to Google Sheet","Please wait");
-    //original url    StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec",
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.Slave_gs_url),
+        final ProgressDialog loading = ProgressDialog.show(this, "Adding Details to Google Sheet", "Please wait");
+        //original url    StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.Slave_gs_url),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
                         mAdapter.empty_absentStudents();
-                      //  Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
-                        absent_roll_nos="";
+                        //  Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+                        absent_roll_nos = "";
                         getItems();
                         //  Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         //startActivity(intent);
@@ -341,10 +328,9 @@ public class MainActivity extends AppCompatActivity {
                 //here we pass params
 
                 parmas.put("action", "addItem");
-                Log.d("absentrolls",absent_roll_nos+"");
+                Log.d("absentrolls", absent_roll_nos + "");
                 parmas.put("absent", absent_roll_nos);
-                parmas.put("class",class_gs);
-
+                parmas.put("class", class_gs);
 
 
                 return parmas;
@@ -364,14 +350,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void Update_Google_Sheet() {
 
-       //confirm_material_dialogbox();
+        //confirm_material_dialogbox();
 
-        ArrayList<Student_Item_Card> absent_students=  mAdapter.absentstudents();
+        ArrayList<Student_Item_Card> absent_students = mAdapter.absentstudents();
 
-        for (int i=0;i<absent_students.size();i++)
-        {
-            String absent_rollno=absent_students.get(i).get_roll_no();
-            absent_roll_nos=absent_roll_nos+","+absent_rollno;
+        for (int i = 0; i < absent_students.size(); i++) {
+            String absent_rollno = absent_students.get(i).get_roll_no();
+            absent_roll_nos = absent_roll_nos + "," + absent_rollno;
         }
         update_absent_students_GOOGLESHEET();
     }
@@ -386,12 +371,12 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("Upload", new BottomSheetMaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
-                       // Toast.makeText(getApplicationContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getApplicationContext(), "Deleted!", Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                         Update_Google_Sheet();
                     }
                 })
-                .setNegativeButton("Cancel",new BottomSheetMaterialDialog.OnClickListener() {
+                .setNegativeButton("Cancel", new BottomSheetMaterialDialog.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         //Toast.makeText(getApplicationContext(), "Cancelled!", Toast.LENGTH_SHORT).show();

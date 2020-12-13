@@ -1,7 +1,7 @@
 package com.freelance.school_attendance.HelperClass;
+
 import android.content.Context;
 import android.graphics.Color;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +9,22 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.freelance.school_attendance.R;
-import com.freelance.school_attendance.Status;
 
 import java.util.ArrayList;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements View.OnClickListener{
+
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements View.OnClickListener {
     private ArrayList<Student_Item_Card> mStudentItemCardList;
     private ArrayList<Student_Item_Card> mStudentItemCardListFull;
     public boolean loginAs;
-Context context;
-   public ArrayList<Student_Item_Card> absentStudents=new ArrayList<>();
+    Context context;
+    public ArrayList<Student_Item_Card> absentStudents = new ArrayList<>();
+
     //Status status=new Status();
     @Override
     public void onClick(View v) {
@@ -45,9 +48,9 @@ Context context;
 
             student_name = itemView.findViewById(R.id.student);
             roll_no = itemView.findViewById(R.id.roll_no);
-            checkBox= itemView.findViewById(R.id.custom_checkboxx);
-            cp=itemView.findViewById(R.id.circular_progress);
-            lectures_attended=itemView.findViewById(R.id.lectures_attended);
+            checkBox = itemView.findViewById(R.id.custom_checkboxx);
+            cp = itemView.findViewById(R.id.circular_progress);
+            lectures_attended = itemView.findViewById(R.id.lectures_attended);
             //status =itemView.findViewById(R.id.status);
         }
     }
@@ -59,7 +62,7 @@ Context context;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-         context=parent.getContext();
+        context = parent.getContext();
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_item, parent, false);
         ViewHolder evh = new ViewHolder(v);
         return evh;
@@ -75,9 +78,9 @@ Context context;
         holder.student_name.setText(currentItem.get_student_name());
         holder.roll_no.setText(currentItem.get_roll_no());
         holder.cp.setMaxProgress(100);
-        holder.lectures_attended.setText("Lectures :"+currentItem.getPresent_lecs()+"/"+currentItem.getTotallecs());
+        holder.lectures_attended.setText("Lectures :" + currentItem.getPresent_lecs() + "/" + currentItem.getTotallecs());
         //holder.status.setText(status.setstatus(currentItem.getPresent_lecs(),currentItem.getTotallecs()));
-        show_hide_att_percentage(holder,currentItem);
+        show_hide_att_percentage(holder, currentItem);
 
 //        holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
 
@@ -106,23 +109,18 @@ Context context;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mStudentItemCardList.get(holder.getAdapterPosition()).setSelected(isChecked);
                 Integer pos = (Integer) holder.checkBox.getTag();
-                if(mStudentItemCardList.get(holder.getAdapterPosition()).isSelected()){
-                   // mStudentItemCardList.get(pos).setSelected(true);
+                if (mStudentItemCardList.get(holder.getAdapterPosition()).isSelected()) {
+                    // mStudentItemCardList.get(pos).setSelected(true);
                     absentStudents.add(mStudentItemCardList.get(holder.getAdapterPosition()));
-                  //  Toast.makeText(context, absentStudents.toString(), Toast.LENGTH_SHORT).show();
-                }
-                else if(!mStudentItemCardList.get(holder.getAdapterPosition()).isSelected())
-                {
-                  //  mStudentItemCardList.get(pos).setSelected(false);
+                    //  Toast.makeText(context, absentStudents.toString(), Toast.LENGTH_SHORT).show();
+                } else if (!mStudentItemCardList.get(holder.getAdapterPosition()).isSelected()) {
+                    //  mStudentItemCardList.get(pos).setSelected(false);
                     absentStudents.remove(mStudentItemCardList.get(holder.getAdapterPosition()));
                 }
 
 
-
             }
         });
-
-
 
 
 //        holder.checkBox.setTag(position);
@@ -155,22 +153,16 @@ Context context;
 
     public void show_hide_att_percentage(ViewHolder holder, Student_Item_Card currentItem) {
 
-        if(loginAs)
-        {
-            try
-            {
+        if (loginAs) {
+            try {
                 holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
                 holder.cp.setTextColor(Color.BLACK);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 holder.cp.setCurrentProgress(0);
 
             }
 
-        }
-            else
-        {
+        } else {
             holder.cp.setVisibility(View.INVISIBLE);
 
         }
@@ -182,24 +174,21 @@ Context context;
         return mStudentItemCardList.size();
     }
 
-    public ArrayList<Student_Item_Card> absentstudents()
-    {
+    public ArrayList<Student_Item_Card> absentstudents() {
 
 
         return absentStudents;
     }
 
 
-    public void empty_absentStudents()
-    {
+    public void empty_absentStudents() {
         absentStudents.clear();
-        Log.d("Abb",absentStudents.toString());
+        Log.d("Abb", absentStudents.toString());
     }
 
     public void setLoginAs(boolean loginAs) {
         this.loginAs = loginAs;
     }
-
 
 
 }

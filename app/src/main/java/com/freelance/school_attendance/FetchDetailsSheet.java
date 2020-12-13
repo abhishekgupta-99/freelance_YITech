@@ -28,13 +28,13 @@ public class FetchDetailsSheet {
     ArrayList<String> teacherlist = new ArrayList<String>();
     ArrayList<String> subjectlist = new ArrayList<String>();
     ArrayList<String> classlist = new ArrayList<String>();
-    String sc_name,sc_SIN,sc_pw;
+    String sc_name, sc_SIN, sc_pw;
     Context ctx;
     CircularProgressIndicator indicator;
 
-    public FetchDetailsSheet(Context ctx,CircularProgressIndicator indicator) {
-        this.ctx=ctx;
-        this.indicator=indicator;
+    public FetchDetailsSheet(Context ctx, CircularProgressIndicator indicator) {
+        this.ctx = ctx;
+        this.indicator = indicator;
     }
 
     public void getItems() {
@@ -50,7 +50,7 @@ public class FetchDetailsSheet {
                         parseItems(response);
 
 
-                        Log.d("ANSRESPONSE",response);
+                        Log.d("ANSRESPONSE", response);
                     }
                 },
 
@@ -61,21 +61,19 @@ public class FetchDetailsSheet {
 
                     }
                 }
-        )
-        {
+        ) {
             @Override
             public void deliverError(VolleyError error) {
                 if (error instanceof NoConnectionError) {
                     Cache.Entry entry = this.getCacheEntry();
-                    if(entry != null) {
+                    if (entry != null) {
                         Response<String> response = parseNetworkResponse(new NetworkResponse(HttpURLConnection.HTTP_OK,
                                 entry.data, false, 0, entry.allResponseHeaders));
-                        Log.d("FAILED CACHE",response.toString());
+                        Log.d("FAILED CACHE", response.toString());
                         deliverResponse(response.result);
                         return;
                     }
-                }
-                else
+                } else
                     super.deliverError(error);
             }
         };
@@ -97,15 +95,15 @@ public class FetchDetailsSheet {
             JSONArray schoolcredentials = jobj.getJSONArray("school_details");
 
             school_idpw(schoolcredentials);
-            create_ArrayList(teacherarray,teacherlist);
-            create_ArrayList(classarray,classlist);
-            create_ArrayList(subjectarray,subjectlist);
+            create_ArrayList(teacherarray, teacherlist);
+            create_ArrayList(classarray, classlist);
+            create_ArrayList(subjectarray, subjectlist);
 
             indicator.setVisibility(View.GONE);
 
-          // initSpinner();
+            // initSpinner();
 
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -116,13 +114,13 @@ public class FetchDetailsSheet {
 
         if (schoolcredentials != null) {
             for (int i = 0; i < schoolcredentials.length(); i++) {
-               // list.add(array.getString(i));
-               JSONObject obj= schoolcredentials.getJSONObject(i);
-              sc_name= obj.getString("School Name");
-               sc_SIN=obj.getString("SIN");
-               sc_pw= obj.getString("School Password");
+                // list.add(array.getString(i));
+                JSONObject obj = schoolcredentials.getJSONObject(i);
+                sc_name = obj.getString("School Name");
+                sc_SIN = obj.getString("SIN");
+                sc_pw = obj.getString("School Password");
 
-               Log.d("SINNNN",sc_SIN);
+                Log.d("SINNNN", sc_SIN);
 
             }
 

@@ -1,4 +1,5 @@
 package com.freelance.school_attendance;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
-    Student stu=new Student();
+    Student stu = new Student();
 
     // Database Name
     private static final String DATABASE_NAME = "student";
@@ -38,26 +39,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + stu.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + Student.TABLE_NAME);
 
         // Create tables again
         onCreate(db);
     }
 
-    public long insertStudent(String StudentName,String rno) {
+    public long insertStudent(String StudentName, String rno) {
         // get writable database as we want to write data
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         // `id` and `timestamp` will be inserted automatically.
         // no need to add them
-        values.put(stu.COLUMN_NOTE, StudentName);
-        values.put(stu.COLUMN_ROLL_NO,Integer.parseInt(rno));
-        values.put(stu.COLUMN_Last_Attendance, NULL);
-        values.put(stu.COLUMN_percent_Attendance, 20);
+        values.put(Student.COLUMN_NOTE, StudentName);
+        values.put(Student.COLUMN_ROLL_NO, Integer.parseInt(rno));
+        values.put(Student.COLUMN_Last_Attendance, NULL);
+        values.put(Student.COLUMN_percent_Attendance, 20);
 
         // insert row
-        long id = db.insert(stu.TABLE_NAME, null, values);
+        long id = db.insert(Student.TABLE_NAME, null, values);
 
         // close db connection
         db.close();
@@ -70,9 +71,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // get readable database as we are not inserting anything
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(stu.TABLE_NAME,
-                new String[]{stu.COLUMN_ROLL_NO, stu.COLUMN_NOTE, stu.COLUMN_TIMESTAMP},
-                stu.COLUMN_ROLL_NO + "=?",
+        Cursor cursor = db.query(Student.TABLE_NAME,
+                new String[]{Student.COLUMN_ROLL_NO, Student.COLUMN_NOTE, Student.COLUMN_TIMESTAMP},
+                Student.COLUMN_ROLL_NO + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
         if (cursor != null)
@@ -80,12 +81,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // prepare Student object
         Student Student = new Student(
-                cursor.getInt(cursor.getColumnIndex(stu.COLUMN_ID)),
-                cursor.getString(cursor.getColumnIndex(stu.COLUMN_NOTE)),
-                cursor.getString(cursor.getColumnIndex(stu.COLUMN_TIMESTAMP)),
-                cursor.getString(cursor.getColumnIndex(stu.COLUMN_Last_Attendance)),
-                cursor.getString(cursor.getColumnIndex(stu.COLUMN_percent_Attendance))
-                );
+                cursor.getInt(cursor.getColumnIndex(com.freelance.school_attendance.Student.COLUMN_ID)),
+                cursor.getString(cursor.getColumnIndex(com.freelance.school_attendance.Student.COLUMN_NOTE)),
+                cursor.getString(cursor.getColumnIndex(com.freelance.school_attendance.Student.COLUMN_TIMESTAMP)),
+                cursor.getString(cursor.getColumnIndex(com.freelance.school_attendance.Student.COLUMN_Last_Attendance)),
+                cursor.getString(cursor.getColumnIndex(com.freelance.school_attendance.Student.COLUMN_percent_Attendance))
+        );
 
         // close the db connection
         cursor.close();
@@ -97,8 +98,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Student> Students = new ArrayList<>();
 
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + stu.TABLE_NAME + " ORDER BY " +
-                stu.COLUMN_TIMESTAMP + " DESC";
+        String selectQuery = "SELECT  * FROM " + Student.TABLE_NAME + " ORDER BY " +
+                Student.COLUMN_TIMESTAMP + " DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -107,9 +108,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Student Student = new Student();
-                Student.setId(cursor.getInt(cursor.getColumnIndex(stu.COLUMN_ID)));
-                Student.setStudent(cursor.getString(cursor.getColumnIndex(stu.COLUMN_NOTE)));
-                Student.setTimestamp(cursor.getString(cursor.getColumnIndex(stu.COLUMN_TIMESTAMP)));
+                Student.setId(cursor.getInt(cursor.getColumnIndex(com.freelance.school_attendance.Student.COLUMN_ID)));
+                Student.setStudent(cursor.getString(cursor.getColumnIndex(com.freelance.school_attendance.Student.COLUMN_NOTE)));
+                Student.setTimestamp(cursor.getString(cursor.getColumnIndex(com.freelance.school_attendance.Student.COLUMN_TIMESTAMP)));
 
                 Students.add(Student);
             } while (cursor.moveToNext());
@@ -139,20 +140,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(stu.COLUMN_NOTE, Student.getStudent());
+        values.put(com.freelance.school_attendance.Student.COLUMN_NOTE, Student.getStudent());
 
         // updating row
-        return db.update(stu.TABLE_NAME, values, stu.COLUMN_ID + " = ?",
+        return db.update(com.freelance.school_attendance.Student.TABLE_NAME, values, com.freelance.school_attendance.Student.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(Student.getId())});
     }
 
     public void deleteStudent(Student Student) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(stu.TABLE_NAME, stu.COLUMN_ID + " = ?",
+        db.delete(com.freelance.school_attendance.Student.TABLE_NAME, com.freelance.school_attendance.Student.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(stu.getId())});
         db.close();
     }
-
 
 
     public ArrayList<Student_Item_Card> getAllElements() {
@@ -185,11 +185,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
 
             } finally {
-                try { cursor.close(); } catch (Exception ignore) {}
+                try {
+                    cursor.close();
+                } catch (Exception ignore) {
+                }
             }
 
         } finally {
-            try { db.close(); } catch (Exception ignore) {}
+            try {
+                db.close();
+            } catch (Exception ignore) {
+            }
         }
 
         return list;

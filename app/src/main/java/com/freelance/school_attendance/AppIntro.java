@@ -1,28 +1,25 @@
 package com.freelance.school_attendance;
+
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-
-import android.provider.Settings;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.crowdfire.cfalertdialog.CFAlertDialog;
+import androidx.annotation.Nullable;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-
 
 
 public class AppIntro extends Activity {
@@ -33,9 +30,8 @@ public class AppIntro extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account!=null)
-        {
-            startActivity(new Intent(this,SchoolLogin.class));
+        if (account != null) {
+            startActivity(new Intent(this, SchoolLogin.class));
 
         }
         setContentView(R.layout.activity_app_intro);
@@ -46,12 +42,10 @@ public class AppIntro extends Activity {
         }
 
 
-
     }
 
-   public void openMainActivity()
-    {
-        Intent i=new Intent(this, ClassSubjectDropDown.class);
+    public void openMainActivity() {
+        Intent i = new Intent(this, ClassSubjectDropDown.class);
         startActivity(i);
     }
 
@@ -87,12 +81,11 @@ public class AppIntro extends Activity {
             Toast.makeText(this, "Successful Sign In", Toast.LENGTH_SHORT).show();
 
 
+            //  showDialog(AppIntro.this);
+            // showDialoglib();
+            startActivity(new Intent(this, ChooseRole.class));
 
-          //  showDialog(AppIntro.this);
-           // showDialoglib();
-            startActivity(new Intent(this,ChooseRole.class));
-
-    //  openMainActivity();
+            //  openMainActivity();
             //updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
@@ -101,8 +94,6 @@ public class AppIntro extends Activity {
             //Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
-
-
 
 
     public void showDialog(Activity activity) {
@@ -116,7 +107,7 @@ public class AppIntro extends Activity {
         mDialogNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"School" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "School", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -125,7 +116,7 @@ public class AppIntro extends Activity {
         mDialogOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Teacher" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Teacher", Toast.LENGTH_SHORT).show();
                 dialog.cancel();
             }
         });

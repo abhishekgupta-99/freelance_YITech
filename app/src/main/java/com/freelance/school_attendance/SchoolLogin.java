@@ -1,16 +1,14 @@
 package com.freelance.school_attendance;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.ArrayList;
 
 public class SchoolLogin extends AppCompatActivity {
     FetchDetailsSheet info;
@@ -21,25 +19,24 @@ public class SchoolLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school_login);
-        SIN=(TextInputEditText) findViewById(R.id.ed_sin);
-        pw= (TextInputEditText)findViewById(R.id.ed_pw);
+        SIN = findViewById(R.id.ed_sin);
+        pw = findViewById(R.id.ed_pw);
         getBundleExtraData();
         CircularProgressIndicator indicator = findViewById(R.id.indicator);
         indicator.setClickable(false);
-        info= new FetchDetailsSheet(this, indicator);
+        info = new FetchDetailsSheet(this, indicator);
         info.getItems();
-       // initSpinner();
+        // initSpinner();
 
     }
 
     private void getBundleExtraData() {
 
-        Intent iin= getIntent();
+        Intent iin = getIntent();
         Bundle b = iin.getExtras();
 
-        if(b!=null)
-        {
-             loginAs =(boolean) b.getBoolean("LoginAs");
+        if (b != null) {
+            loginAs = b.getBoolean("LoginAs");
         }
     }
 
@@ -50,20 +47,17 @@ public class SchoolLogin extends AppCompatActivity {
 
     private void checkvalidSINpw() {
 
-        String sin= SIN.getText().toString().trim();
-        String passw= pw.getText().toString().trim();
-        if(sin.equals(info.sc_SIN) && passw.equals(info.sc_pw))
-        {
+        String sin = SIN.getText().toString().trim();
+        String passw = pw.getText().toString().trim();
+        if (sin.equals(info.sc_SIN) && passw.equals(info.sc_pw)) {
             Intent i = new Intent(this, ClassSubjectDropDown.class);
-            i.putExtra("School name", info.sc_name+"");
+            i.putExtra("School name", info.sc_name + "");
             i.putExtra("Teacherlist", info.teacherlist);
-            i.putExtra("Classlist",info.classlist);
-            i.putExtra("Subjectlist",info.subjectlist);
-            i.putExtra("LoginAs",loginAs);
+            i.putExtra("Classlist", info.classlist);
+            i.putExtra("Subjectlist", info.subjectlist);
+            i.putExtra("LoginAs", loginAs);
             startActivity(i);
-        }
-        else
-        {
+        } else {
             Toast.makeText(this, "Wrong Credentials ! Please Try Again", Toast.LENGTH_SHORT).show();
 
         }
