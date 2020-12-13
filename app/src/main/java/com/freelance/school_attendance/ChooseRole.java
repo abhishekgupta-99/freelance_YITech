@@ -6,8 +6,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.freelance.school_attendance.HelperClass.SharedPrefSession;
-
 public class ChooseRole extends AppCompatActivity {
 
     @Override

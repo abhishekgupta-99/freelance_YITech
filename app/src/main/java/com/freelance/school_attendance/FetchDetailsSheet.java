@@ -3,7 +3,6 @@ package com.freelance.school_attendance;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
@@ -15,7 +14,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.freelance.school_attendance.HelperClass.Student_Item_Card;
-import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
