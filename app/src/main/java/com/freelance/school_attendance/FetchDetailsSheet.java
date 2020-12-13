@@ -1,5 +1,6 @@
 package com.freelance.school_attendance;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -30,9 +31,9 @@ public class FetchDetailsSheet {
     ArrayList<String> classlist = new ArrayList<String>();
     String sc_name, sc_SIN, sc_pw;
     Context ctx;
-    CircularProgressIndicator indicator;
+    ProgressDialog indicator;
 
-    public FetchDetailsSheet(Context ctx, CircularProgressIndicator indicator) {
+    public FetchDetailsSheet(Context ctx, ProgressDialog indicator) {
         this.ctx = ctx;
         this.indicator = indicator;
     }
@@ -99,7 +100,8 @@ public class FetchDetailsSheet {
             create_ArrayList(classarray, classlist);
             create_ArrayList(subjectarray, subjectlist);
 
-            indicator.setVisibility(View.GONE);
+           // indicator.setVisibility(View.GONE);
+            indicator.dismiss();
 
             // initSpinner();
 

@@ -244,4 +244,8 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         i.putExtra("LoginAs", loginAs);
         startActivity(i);
     }
+
+    public void back(View view) {
+        onBackPressed();
+    }
 }

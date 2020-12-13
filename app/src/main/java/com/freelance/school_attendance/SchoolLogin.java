@@ -1,5 +1,6 @@
 package com.freelance.school_attendance;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ public class SchoolLogin extends AppCompatActivity {
     FetchDetailsSheet info;
     TextInputEditText SIN, pw;
     boolean loginAs;
+    ProgressDialog loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +24,13 @@ public class SchoolLogin extends AppCompatActivity {
         SIN = findViewById(R.id.ed_sin);
         pw = findViewById(R.id.ed_pw);
         getBundleExtraData();
-        CircularProgressIndicator indicator = findViewById(R.id.indicator);
-        indicator.setClickable(false);
-        info = new FetchDetailsSheet(this, indicator);
+       // CircularProgressIndicator indicator = findViewById(R.id.indicator);
+
+        loading = ProgressDialog.show(this, "Loading", "Fetching Credentials", false, true);
+        loading.setCanceledOnTouchOutside(false);
+        loading.setCancelable(false);
+
+        info = new FetchDetailsSheet(this, loading);
         info.getItems();
         // initSpinner();
 
@@ -61,5 +67,9 @@ public class SchoolLogin extends AppCompatActivity {
             Toast.makeText(this, "Wrong Credentials ! Please Try Again", Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    public void back(View view) {
+        onBackPressed();
     }
 }
