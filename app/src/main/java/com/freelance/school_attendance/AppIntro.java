@@ -46,24 +46,7 @@ public class AppIntro extends Activity {
         }
 
 
-       /* addSlide(new SlideFragmentBuilder()
-                        .backgroundColor(R.color.colorPrimary)
-                        .buttonsColor(R.color.colorAccent)
-                     //   .possiblePermissions(new String[]{Manifest.permission.CALL_PHONE})
-                      //  .neededPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
-                        .image(R.drawable.ic_attendance)
-                        .title("FreeLance")
-                        .description("A school attendance management app")
-                        .build(),
-                new MessageButtonBehaviour(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                      //  showMessage("We provide solutions to make you love your work");
-                        //googlesignin();
-                      //  openMainActivity();
 
-                    }
-                }, "Google SignIn"));*/
     }
 
    public void openMainActivity()
