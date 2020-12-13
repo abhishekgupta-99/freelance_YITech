@@ -30,6 +30,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.freelance.school_attendance.HelperClass.RecyclerViewAdapter;
 import com.freelance.school_attendance.HelperClass.Student_Item_Card;
+import com.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog;
+import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     TextView student;
     TextView teacher, class_div, subject;
     String t,c,s,class_gs;
+     boolean loginAs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
              class_gs=(String) b.getString("Class");
              c ="Class : "+ (String) b.getString("Class");
              s ="Subject : "+(String) b.getString("Subject");
+             loginAs= (boolean) b.getBoolean("LoginAs");
           teacher.setText(t);
           class_div.setText(c);
           subject.setText(s);
@@ -252,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter = new RecyclerViewAdapter(list);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setLoginAs(loginAs);
         mAdapter.empty_absentStudents();
         loading.dismiss();
 
@@ -357,7 +362,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void Update_Google_Sheet(View view) {
+    public void Update_Google_Sheet() {
+
+       //confirm_material_dialogbox();
 
         ArrayList<Student_Item_Card> absent_students=  mAdapter.absentstudents();
 
@@ -367,5 +374,33 @@ public class MainActivity extends AppCompatActivity {
             absent_roll_nos=absent_roll_nos+","+absent_rollno;
         }
         update_absent_students_GOOGLESHEET();
+    }
+
+    public void confirm_material_dialogbox(View view) {
+
+        BottomSheetMaterialDialog mBottomSheetDialog = new BottomSheetMaterialDialog.Builder(this)
+                .setTitle("Upload?")
+                .setMessage("Are you sure want to update this attendance to Google Sheet?")
+                .setCancelable(false)
+                .setAnimation(R.raw.uploading)
+                .setPositiveButton("Upload", new BottomSheetMaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                       // Toast.makeText(getApplicationContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                        Update_Google_Sheet();
+                    }
+                })
+                .setNegativeButton("Cancel",new BottomSheetMaterialDialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        //Toast.makeText(getApplicationContext(), "Cancelled!", Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                })
+                .build();
+
+        // Show Dialog
+        mBottomSheetDialog.show();
     }
 }

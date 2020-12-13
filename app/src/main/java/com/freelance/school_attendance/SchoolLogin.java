@@ -10,9 +10,12 @@ import android.widget.Toast;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+
 public class SchoolLogin extends AppCompatActivity {
     FetchDetailsSheet info;
     TextInputEditText SIN, pw;
+    boolean loginAs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +23,24 @@ public class SchoolLogin extends AppCompatActivity {
         setContentView(R.layout.activity_school_login);
         SIN=(TextInputEditText) findViewById(R.id.ed_sin);
         pw= (TextInputEditText)findViewById(R.id.ed_pw);
+        getBundleExtraData();
         CircularProgressIndicator indicator = findViewById(R.id.indicator);
         indicator.setClickable(false);
         info= new FetchDetailsSheet(this, indicator);
         info.getItems();
        // initSpinner();
 
+    }
+
+    private void getBundleExtraData() {
+
+        Intent iin= getIntent();
+        Bundle b = iin.getExtras();
+
+        if(b!=null)
+        {
+             loginAs =(boolean) b.getBoolean("LoginAs");
+        }
     }
 
     public void goToDropDown(View view) {
@@ -44,6 +59,7 @@ public class SchoolLogin extends AppCompatActivity {
             i.putExtra("Teacherlist", info.teacherlist);
             i.putExtra("Classlist",info.classlist);
             i.putExtra("Subjectlist",info.subjectlist);
+            i.putExtra("LoginAs",loginAs);
             startActivity(i);
         }
         else

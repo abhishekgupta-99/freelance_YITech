@@ -32,12 +32,20 @@ public class AppIntro extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account!=null)
+        {
+            startActivity(new Intent(this,SchoolLogin.class));
+
+        }
         setContentView(R.layout.activity_app_intro);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             getWindow().setStatusBarColor(Color.WHITE);
         }
+
+
        /* addSlide(new SlideFragmentBuilder()
                         .backgroundColor(R.color.colorPrimary)
                         .buttonsColor(R.color.colorAccent)
@@ -111,33 +119,7 @@ public class AppIntro extends Activity {
         }
     }
 
-    void showDialoglib()
-    {
-        // Create Alert using Builder
-        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this)
-                .setDialogStyle(CFAlertDialog.CFAlertStyle.ALERT)
-                .setTitle("Choose Your Role")
-                .setMessage("Please Choose One of the roles below.");
-        builder.addButton("SCHOOL", Color.parseColor("#FFFFFF"), Color.parseColor("#392061"), CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(AppIntro.this, "Upgrade tapped", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-        });
 
-        builder.addButton("TEACHER", Color.parseColor("#FFFFFF"), Color.parseColor("#822E81"), CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(AppIntro.this, "Welcome Teacher !", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-                openMainActivity();
-            }
-        });
-
-// Show the alert
-        builder.show();
-    }
 
 
     public void showDialog(Activity activity) {

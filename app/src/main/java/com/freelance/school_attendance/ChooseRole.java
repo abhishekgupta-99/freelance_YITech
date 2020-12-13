@@ -14,9 +14,17 @@ public class ChooseRole extends AppCompatActivity {
         setContentView(R.layout.activity_choose_role);
     }
 
-    public void openMainActivity(View v)
+    public void openTeacherLogin(View v)
     {
         Intent i=new Intent(this, SchoolLogin.class);
+        i.putExtra("LoginAs",false);
         startActivity(i);
+    }
+
+    public void openSchoolLogin(View view) {
+        Intent i=new Intent(this, SchoolLogin.class);
+        i.putExtra("LoginAs",true);
+        startActivity(i);
+
     }
 }

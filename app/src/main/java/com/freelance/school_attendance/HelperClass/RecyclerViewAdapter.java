@@ -19,6 +19,7 @@ import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements View.OnClickListener{
     private ArrayList<Student_Item_Card> mStudentItemCardList;
     private ArrayList<Student_Item_Card> mStudentItemCardListFull;
+    public boolean loginAs;
 Context context;
    public ArrayList<Student_Item_Card> absentStudents=new ArrayList<>();
     //Status status=new Status();
@@ -32,6 +33,7 @@ Context context;
         public Context context;
         public TextView student_name;
         public TextView roll_no;
+
         public TextView lectures_attended;
         //public  TextView status;
         CheckBox checkBox;
@@ -75,17 +77,10 @@ Context context;
         holder.cp.setMaxProgress(100);
         holder.lectures_attended.setText("Lectures :"+currentItem.getPresent_lecs()+"/"+currentItem.getTotallecs());
         //holder.status.setText(status.setstatus(currentItem.getPresent_lecs(),currentItem.getTotallecs()));
-        try
-        {
-            holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
-        }
-        catch (Exception e)
-        {
-            holder.cp.setCurrentProgress(0);
+        show_hide_att_percentage(holder,currentItem);
 
-        }
 //        holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
-        holder.cp.setTextColor(Color.BLACK);
+
 //        if(Integer.parseInt(currentItem.getPercent())< 75) {
 //            holder.cp.setTextColor(Color.RED);
 //          //  holder.cp.setGradient(gradientType, Color.RED);
@@ -157,6 +152,31 @@ Context context;
 
     }
 
+
+    public void show_hide_att_percentage(ViewHolder holder, Student_Item_Card currentItem) {
+
+        if(loginAs)
+        {
+            try
+            {
+                holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
+                holder.cp.setTextColor(Color.BLACK);
+            }
+            catch (Exception e)
+            {
+                holder.cp.setCurrentProgress(0);
+
+            }
+
+        }
+            else
+        {
+            holder.cp.setVisibility(View.INVISIBLE);
+
+        }
+
+    }
+
     @Override
     public int getItemCount() {
         return mStudentItemCardList.size();
@@ -175,6 +195,11 @@ Context context;
         absentStudents.clear();
         Log.d("Abb",absentStudents.toString());
     }
+
+    public void setLoginAs(boolean loginAs) {
+        this.loginAs = loginAs;
+    }
+
 
 
 }

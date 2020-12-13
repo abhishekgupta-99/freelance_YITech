@@ -47,6 +47,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
     ArrayList<String> teacherlist = new ArrayList<String>();
     ArrayList<String> subjectlist = new ArrayList<String>();
     ArrayList<String> classlist = new ArrayList<String>();
+    boolean loginAs;
 
 
     @Override
@@ -78,6 +79,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
             teacherlist= (ArrayList<String>) getIntent().getSerializableExtra("Teacherlist");
             subjectlist= (ArrayList<String>) getIntent().getSerializableExtra("Subjectlist");
             classlist= (ArrayList<String>) getIntent().getSerializableExtra("Classlist");
+            loginAs=(boolean) b.getBoolean("LoginAs");
 
             sc_name.setText(j);
         }
@@ -249,6 +251,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         i.putExtra("Teacher", selected_teacher);
         i.putExtra("Class", selected_class);
         i.putExtra("Subject", selected_subject);
+        i.putExtra("LoginAs",loginAs);
         startActivity(i);
     }
 }
