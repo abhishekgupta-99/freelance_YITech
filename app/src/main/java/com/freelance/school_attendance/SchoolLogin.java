@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.freelance.school_attendance.HelperClass.SharedPrefSession;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -16,6 +17,8 @@ public class SchoolLogin extends AppCompatActivity {
     TextInputEditText SIN, pw;
     boolean loginAs;
     ProgressDialog loading;
+    SharedPrefSession sp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class SchoolLogin extends AppCompatActivity {
         SIN = findViewById(R.id.ed_sin);
         pw = findViewById(R.id.ed_pw);
         getBundleExtraData();
+        sp=new SharedPrefSession(getApplicationContext());
        // CircularProgressIndicator indicator = findViewById(R.id.indicator);
 
         loading = ProgressDialog.show(this, "Loading", "Fetching Credentials", false, true);
@@ -43,7 +47,10 @@ public class SchoolLogin extends AppCompatActivity {
 
         if (b != null) {
             loginAs = b.getBoolean("LoginAs");
+
         }
+
+
     }
 
     public void goToDropDown(View view) {
@@ -62,6 +69,7 @@ public class SchoolLogin extends AppCompatActivity {
             i.putExtra("Classlist", info.classlist);
             i.putExtra("Subjectlist", info.subjectlist);
             i.putExtra("LoginAs", loginAs);
+            sp.createLoginSession(loginAs);
             startActivity(i);
         } else {
             Toast.makeText(this, "Wrong Credentials ! Please Try Again", Toast.LENGTH_SHORT).show();

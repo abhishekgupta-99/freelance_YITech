@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     TextView teacher, class_div, subject;
     String t, c, s, class_gs;
     boolean loginAs;
+    Button bt_save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         teacher = findViewById(R.id.tv_teacher);
         class_div = findViewById(R.id.tv_class);
         subject = findViewById(R.id.tv_sub);
+        bt_save= findViewById(R.id.save);
         // Button fab = findViewById(R.id.fab)
         getextraIntentData();
         mRecyclerview();
@@ -101,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
             teacher.setText(t);
             class_div.setText(c);
             subject.setText(s);
+        }
+
+        if(loginAs)
+        {
+
+            bt_save.setVisibility(View.INVISIBLE);
         }
     }
 

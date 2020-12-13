@@ -6,15 +6,19 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.freelance.school_attendance.HelperClass.SharedPrefSession;
+
 public class ChooseRole extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_role);
+
     }
 
     public void openTeacherLogin(View v) {
+
         Intent i = new Intent(this, SchoolLogin.class);
         i.putExtra("LoginAs", false);
         startActivity(i);

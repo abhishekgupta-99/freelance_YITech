@@ -80,7 +80,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.cp.setMaxProgress(100);
         holder.lectures_attended.setText("Lectures :" + currentItem.getPresent_lecs() + "/" + currentItem.getTotallecs());
         //holder.status.setText(status.setstatus(currentItem.getPresent_lecs(),currentItem.getTotallecs()));
-        show_hide_att_percentage(holder, currentItem);
+        show_hide_att_percentage(holder, currentItem );
 
 //        holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
 
@@ -157,6 +157,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             try {
                 holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
                 holder.cp.setTextColor(Color.BLACK);
+                holder.checkBox.setVisibility(View.INVISIBLE);
             } catch (Exception e) {
                 holder.cp.setCurrentProgress(0);
 
@@ -164,6 +165,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         } else {
             holder.cp.setVisibility(View.INVISIBLE);
+
 
         }
 

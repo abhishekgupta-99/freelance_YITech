@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.freelance.school_attendance.HelperClass.SharedPrefSession;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,13 +26,17 @@ import com.google.android.gms.tasks.Task;
 public class AppIntro extends Activity {
 
     private static final int RC_SIGN_IN = 321;
+    SharedPrefSession sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sp=new SharedPrefSession(getApplicationContext());
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
         if (account != null) {
-            startActivity(new Intent(this, SchoolLogin.class));
+           // startActivity(new Intent(this, ChooseRole.class));
+            sp.checkLoginandRedirect();
 
         }
         setContentView(R.layout.activity_app_intro);

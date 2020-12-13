@@ -1,5 +1,6 @@
 package com.freelance.school_attendance;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
+import com.freelance.school_attendance.HelperClass.SharedPrefSession;
 import com.freelance.school_attendance.HelperClass.Student_Item_Card;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 
@@ -44,12 +46,14 @@ public class ClassSubjectDropDown extends AppCompatActivity {
     ArrayList<String> subjectlist = new ArrayList<String>();
     ArrayList<String> classlist = new ArrayList<String>();
     boolean loginAs;
+    SharedPrefSession sp;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drop_down_menus);
+        sp=new SharedPrefSession(getApplicationContext());
 
         sc_name = findViewById(R.id.ed_scname);
         CircularProgressIndicator indicator = findViewById(R.id.indicator);
@@ -89,6 +93,18 @@ public class ClassSubjectDropDown extends AppCompatActivity {
 
         provinceList = new ArrayList<>();
 
+       // if((subjectlist==null && subjectlist.isEmpty())||(teacherlist==null && teacherlist.isEmpty())||(classlist==null && classlist.isEmpty()))
+       if(subjectlist==null || subjectlist.isEmpty())
+        {
+           ProgressDialog loading = ProgressDialog.show(this, "Loading", "Fetching Credentials", false, true);
+            loading.setCanceledOnTouchOutside(false);
+            loading.setCancelable(false);
+           FetchDetailsSheet info = new FetchDetailsSheet(this, loading);
+            info.getItems();
+            subjectlist=info.subjectlist;
+            classlist=info.classlist;
+            teacherlist=info.teacherlist;
+        }
 
         subjectspinner.setItem(subjectlist);
         classspinner.setItem(classlist);
@@ -247,5 +263,9 @@ public class ClassSubjectDropDown extends AppCompatActivity {
 
     public void back(View view) {
         onBackPressed();
+    }
+
+    public void logout(View view) {
+        sp.logoutUser();
     }
 }
