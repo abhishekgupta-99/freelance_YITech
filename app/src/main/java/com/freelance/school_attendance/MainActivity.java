@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
     EditText studentname;
     private RecyclerView.LayoutManager mLayoutManager;
     public ArrayList<Student_Item_Card> student_list;
-    String absent_roll_nos = "";
+    String absent_roll_nos="";
+    String present_roll_nos="";
+    String wp_roll_nos = "";
     TextView student,status,mark;
     TextView teacher, class_div, subject;
     String t, c, s, class_gs;
@@ -114,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
             teacher.setText(t);
             class_div.setText(c);
             subject.setText(s);
-            status.setVisibility(View.GONE);
-            mark.setVisibility(View.GONE);
+         //   status.setVisibility(View.GONE);
+         //   mark.setVisibility(View.GONE);
         }
 
         if(loginAs)
@@ -270,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new RecyclerViewAdapter(list);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setLoginAs(loginAs);
-        mAdapter.empty_absentStudents();
+        mAdapter.empty_Students_arraylist();
         loading.dismiss();
 
 
@@ -325,9 +327,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         loading.dismiss();
-                        mAdapter.empty_absentStudents();
+                        mAdapter.empty_Students_arraylist();
                         //  Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
                         absent_roll_nos = "";
+                        present_roll_nos="";
+                        wp_roll_nos="";
                         getItems();
                         //  Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         //startActivity(intent);
@@ -350,6 +354,8 @@ public class MainActivity extends AppCompatActivity {
                 parmas.put("action", "addItem");
                 Log.d("absentrolls", absent_roll_nos + "");
                 parmas.put("absent", absent_roll_nos);
+                parmas.put("present",present_roll_nos);
+                parmas.put("withpermission",wp_roll_nos);
                 parmas.put("class", class_gs);
 
 
@@ -373,11 +379,36 @@ public class MainActivity extends AppCompatActivity {
         //confirm_material_dialogbox();
 
         ArrayList<Student_Item_Card> absent_students = mAdapter.absentstudents();
+        ArrayList<Student_Item_Card> present_students = mAdapter.getPresentStudents();
+        ArrayList<Student_Item_Card> with_permission_students = mAdapter.getWithPermission();
 
         for (int i = 0; i < absent_students.size(); i++) {
-            String absent_rollno = absent_students.get(i).get_roll_no();
-            absent_roll_nos = absent_roll_nos + "," + absent_rollno;
+            if(!absent_students.get(i).get_roll_no().equals("null")) {
+                String absent_rollno = absent_students.get(i).get_roll_no();
+                absent_roll_nos = absent_roll_nos + "," + absent_rollno;
+            }
         }
+
+        for (int i = 0; i < present_students.size(); i++) {
+            if(!present_students.get(i).get_roll_no().equals("null")) {
+                String present_rollno = present_students.get(i).get_roll_no();
+                present_roll_nos = present_roll_nos + "," + present_rollno;
+            }
+        }
+
+        for (int i = 0; i < with_permission_students.size(); i++) {
+            if(!with_permission_students.get(i).get_roll_no().equals("null"))
+            {
+                String wp_rollno = with_permission_students.get(i).get_roll_no();
+                wp_roll_nos = wp_roll_nos + "," + wp_rollno;
+            }
+
+        }
+
+        Log.d("PPPPPPPPP", present_roll_nos);
+        Log.d("AAAA",absent_roll_nos);
+        Log.d("wwwwwwwwppp",wp_roll_nos);
+
         update_absent_students_GOOGLESHEET();
     }
 

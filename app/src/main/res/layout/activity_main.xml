@@ -103,6 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
+        android:weightSum="3"
         app:layout_constraintTop_toBottomOf="@+id/tv_sub"
         tools:layout_editor_absoluteX="188dp">
 
@@ -115,7 +116,7 @@
             android:text="Status"
             android:textAlignment="center"
             android:textColor="@color/background900"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -125,7 +126,7 @@
             android:text="Roll No &amp; Name"
             android:textAlignment="center"
             android:textColor="@color/background900"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/markmain"
@@ -133,10 +134,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/poppins"
-            android:text="Mark"
+            android:text="P   A    WP "
             android:textAlignment="center"
             android:textColor="@color/background900"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

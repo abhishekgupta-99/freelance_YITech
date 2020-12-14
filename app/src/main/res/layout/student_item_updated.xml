@@ -160,7 +160,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/student"
-            >
+            tools:ignore="MissingConstraints">
             <RadioButton
                 android:id="@+id/p"
                 android:layout_width="wrap_content"

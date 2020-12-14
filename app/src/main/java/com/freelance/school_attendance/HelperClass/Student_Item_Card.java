@@ -6,6 +6,7 @@ public class Student_Item_Card {
     private String student_name;
     private String roll_no;
     private boolean isSelected;
+    private int rg_id;
     private ArrayList<String> triggered_alarms;
     private String Last_Attendance;
     private String percent;
@@ -91,5 +92,15 @@ public class Student_Item_Card {
 
     public void setPercent(String percent) {
         this.percent = percent;
+    }
+
+    public void setSelectedRadioId(int i) {
+        rg_id=i;
+
+    }
+
+    public int getSelectedRadioId()
+    {
+        return rg_id;
     }
 }

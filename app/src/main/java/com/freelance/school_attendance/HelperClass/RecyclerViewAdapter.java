@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +25,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<Student_Item_Card> mStudentItemCardListFull;
     public boolean loginAs;
     Context context;
-    public ArrayList<Student_Item_Card> absentStudents = new ArrayList<>();
+    public ArrayList<Student_Item_Card> absentStudents=new ArrayList<>();
+    public ArrayList<Student_Item_Card> presentStudents=new ArrayList<>();
+    public ArrayList<Student_Item_Card> withPermission = new ArrayList<>();
+
+    public ArrayList<Student_Item_Card> getPresentStudents() {
+        return presentStudents;
+    }
+
+    public ArrayList<Student_Item_Card> getWithPermission() {
+        return withPermission;
+    }
+
+
+
+
     //public TextView status;
 
     //Status status=new Status();
@@ -33,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public Context context;
         public TextView student_name;
         public TextView roll_no;
@@ -42,17 +58,35 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public  TextView status;
         CheckBox checkBox;
         CircularProgressIndicator cp;
+        RadioGroup rg;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+
             student_name = itemView.findViewById(R.id.student);
             roll_no = itemView.findViewById(R.id.roll_no);
-            checkBox = itemView.findViewById(R.id.custom_checkboxx);
+          //  checkBox = itemView.findViewById(R.id.custom_checkboxx);
             cp = itemView.findViewById(R.id.circular_progress);
             lectures_attended = itemView.findViewById(R.id.lectures_attended);
+            rg=itemView.findViewById(R.id.rg);
             //status =itemView.findViewById(R.id.status);
+
+//            rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//                    if ( lastCheckedRadioGroup != null && lastCheckedRadioGroup.getCheckedRadioButtonId()!= radioGroup.getCheckedRadioButtonId() && lastCheckedRadioGroup.getCheckedRadioButtonId() != -1) {
+//                        lastCheckedRadioGroup.clearCheck();
+//
+////                        Toast.makeText(context,
+////                                "Radio button clicked " + radioGroup.getCheckedRadioButtonId(),
+////                                Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                    lastCheckedRadioGroup = radioGroup;
+//                }
+//            });
         }
     }
 
@@ -64,7 +98,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_item_updated, parent, false);
         ViewHolder evh = new ViewHolder(v);
         return evh;
     }
@@ -72,8 +106,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        int gradientType = CircularProgressIndicator.LINEAR_GRADIENT;
-        int endColor = Color.MAGENTA;
         holder.setIsRecyclable(false);
         Student_Item_Card currentItem = mStudentItemCardList.get(position);
         holder.student_name.setText(currentItem.get_student_name());
@@ -100,28 +132,64 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //        }
 
 //in some cases, it will prevent unwanted situations
-        holder.checkBox.setOnCheckedChangeListener(null);
+        // BOTTOM CODE WORKING #########################################33
 
-        //if true, your custom_checkbox will be selected, else unselected
-        holder.checkBox.setChecked(mStudentItemCardList.get(position).isSelected());
+//        holder.checkBox.setOnCheckedChangeListener(null);
+//
+//        //if true, your custom_checkbox will be selected, else unselected
+//        holder.checkBox.setChecked(mStudentItemCardList.get(position).isSelected());
+//
+//        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                mStudentItemCardList.get(holder.getAdapterPosition()).setSelected(isChecked);
+//                Integer pos = (Integer) holder.checkBox.getTag();
+//                if (mStudentItemCardList.get(holder.getAdapterPosition()).isSelected()) {
+//                    // mStudentItemCardList.get(pos).setSelected(true);
+//                    absentStudents.add(mStudentItemCardList.get(holder.getAdapterPosition()));
+//                    //  Toast.makeText(context, absentStudents.toString(), Toast.LENGTH_SHORT).show();
+//                } else if (!mStudentItemCardList.get(holder.getAdapterPosition()).isSelected()) {
+//                     // mStudentItemCardList.get(pos).setSelected(false);
+//                    absentStudents.remove(mStudentItemCardList.get(holder.getAdapterPosition()));
+//                }
+//
+//
+//            }
+//        });
 
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+
+        //UP CODE WORKING #########################################################
+
+
+        //holder.rg.setOnCheckedChangeListener(null);
+       // Log.d("NULLLLLL", mStudentItemCardList.get(position).getSelectedRadioId()+"");
+     //   holder.rg.clearCheck();
+        // holder.rg.getChildAt(mStudentItemCardList.get(position).getSelectedRadioId()).setSelected(true);
+         holder.rg.check(mStudentItemCardList.get(position).getSelectedRadioId());
+
+       // holder.rg.getChildAt(mStudentItemCardList.get(holder.getAdapterPosition()).getSelectedRadioId()).setSelected(true);
+
+        holder.rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mStudentItemCardList.get(holder.getAdapterPosition()).setSelected(isChecked);
-                Integer pos = (Integer) holder.checkBox.getTag();
-                if (mStudentItemCardList.get(holder.getAdapterPosition()).isSelected()) {
-                    // mStudentItemCardList.get(pos).setSelected(true);
-                    absentStudents.add(mStudentItemCardList.get(holder.getAdapterPosition()));
-                    //  Toast.makeText(context, absentStudents.toString(), Toast.LENGTH_SHORT).show();
-                } else if (!mStudentItemCardList.get(holder.getAdapterPosition()).isSelected()) {
-                    //  mStudentItemCardList.get(pos).setSelected(false);
-                    absentStudents.remove(mStudentItemCardList.get(holder.getAdapterPosition()));
-                }
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                // mStudentItemCardList.get(holder.getAdapterPosition()).setSe(i);
+               // mStudentItemCardList.get(position).setSelectedRadioId(i);
+//
+                int radioButtonID = radioGroup.getCheckedRadioButtonId();
+                View radioButton = radioGroup.findViewById(radioButtonID);
+                int idx = radioGroup.indexOfChild(radioButton);
+                Log.d("NULLLLL pos", idx+"");
+                update_attendace_status_arrays(idx, mStudentItemCardList.get(holder.getAdapterPosition()));
+
+                mStudentItemCardList.get(holder.getAdapterPosition()).setSelectedRadioId(i);
+
 
 
             }
         });
+
 
 
 //        holder.checkBox.setTag(position);
@@ -148,6 +216,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //                }
 //            }
 //        });
+
+    }
+
+    private void update_attendace_status_arrays(int idx, Student_Item_Card student_item_card) {
+        if(student_item_card!=null)
+        {
+            switch (idx)
+            {
+                case 0:
+                    presentStudents.add(student_item_card);
+                    break;
+                case 1:
+                    absentStudents.add(student_item_card);
+                    break;
+                case 2:
+                    withPermission.add(student_item_card);
+                    break;
+//                default:
+//                    presentStudents.add(student_item_card);
+//                    break;
+            }
+        }
 
     }
 
@@ -183,8 +273,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-    public void empty_absentStudents() {
+    public void empty_Students_arraylist() {
         absentStudents.clear();
+        presentStudents.clear();
+        withPermission.clear();
         Log.d("Abb", absentStudents.toString());
     }
 

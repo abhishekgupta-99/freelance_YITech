@@ -205,8 +205,14 @@ public class ClassSubjectDropDown extends AppCompatActivity {
     }
 
     public void markAttendance(View view) {
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("Teacher", "Abhishek");
+        i.putExtra("Class", "1A");
+        i.putExtra("Subject", "English");
+        i.putExtra("LoginAs", loginAs);
+        startActivity(i);
 
-        confirm_dropdown_selected();
+      //  confirm_dropdown_selected();
 
     }
 
