@@ -24,6 +24,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public boolean loginAs;
     Context context;
     public ArrayList<Student_Item_Card> absentStudents = new ArrayList<>();
+    //public TextView status;
 
     //Status status=new Status();
     @Override
@@ -38,7 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public TextView roll_no;
 
         public TextView lectures_attended;
-        //public  TextView status;
+        public  TextView status;
         CheckBox checkBox;
         CircularProgressIndicator cp;
 
@@ -152,7 +153,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     public void show_hide_att_percentage(ViewHolder holder, Student_Item_Card currentItem) {
-
         if (loginAs) {
             try {
                 holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
@@ -164,7 +164,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
 
         } else {
-            holder.cp.setVisibility(View.INVISIBLE);
+            holder.cp.setVisibility(View.GONE);
 
 
         }

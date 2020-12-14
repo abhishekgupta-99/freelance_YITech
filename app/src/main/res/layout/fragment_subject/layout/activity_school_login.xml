@@ -65,7 +65,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:hint="School Number"
-        android:textColorHint="#C5C5C5"
+        android:textColorHint="#6C6C6C"
         app:boxStrokeColor="@color/md_blue_200"
         app:hintTextColor="@color/md_blue_200"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:hint="Password"
-        android:textColorHint="#C5C5C5"
+        android:textColorHint="#6C6C6C"
         app:boxStrokeColor="@color/md_blue_200"
         app:endIconMode="password_toggle"
         app:hintTextColor="@color/md_blue_200"
@@ -97,8 +97,8 @@
         app:layout_constraintTop_toBottomOf="@+id/SIN">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
             android:id="@+id/ed_pw"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>

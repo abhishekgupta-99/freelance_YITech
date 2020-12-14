@@ -2,6 +2,8 @@ package com.freelance.school_attendance;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     public ArrayList<Student_Item_Card> student_list;
     String absent_roll_nos = "";
-    TextView student;
+    TextView student,status,mark;
     TextView teacher, class_div, subject;
     String t, c, s, class_gs;
     boolean loginAs;
@@ -61,12 +63,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(Color.WHITE);
+        }
+
         db = new DatabaseHelper(this);
         student = findViewById(R.id.student);
         teacher = findViewById(R.id.tv_teacher);
         class_div = findViewById(R.id.tv_class);
         subject = findViewById(R.id.tv_sub);
         bt_save= findViewById(R.id.save);
+        status = findViewById(R.id.statusmain);
+        mark = findViewById(R.id.markmain);
         // Button fab = findViewById(R.id.fab)
         getextraIntentData();
         mRecyclerview();
@@ -104,12 +114,13 @@ public class MainActivity extends AppCompatActivity {
             teacher.setText(t);
             class_div.setText(c);
             subject.setText(s);
+            status.setVisibility(View.GONE);
+            mark.setVisibility(View.GONE);
         }
 
         if(loginAs)
         {
-
-            bt_save.setVisibility(View.INVISIBLE);
+            bt_save.setVisibility(View.GONE);
         }
     }
 
