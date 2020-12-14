@@ -162,17 +162,17 @@
             app:layout_constraintLeft_toRightOf="@+id/student"
             >
             <RadioButton
-                android:id="@+id/rb_coldfusion"
+                android:id="@+id/p"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
             <RadioButton
-                android:id="@+id/rb_flex"
+                android:id="@+id/a"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
             <RadioButton
-                android:id="@+id/rb_flash"
+                android:id="@+id/wp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
