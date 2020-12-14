@@ -70,7 +70,7 @@ public class SharedPrefSession {
         // Check login status
         if(this.isSchool()){
             // user is not logged in redirect him to Login Activity
-            Intent i = new Intent(_context, ClassSubjectDropDown.class);
+            Intent i = new Intent(_context, ChooseRole.class);
             i.putExtra("LoginAs", true);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -80,7 +80,7 @@ public class SharedPrefSession {
         }
         else
         {
-            Intent i = new Intent(_context, ClassSubjectDropDown.class);
+            Intent i = new Intent(_context, ChooseRole.class);
             i.putExtra("LoginAs", false);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
