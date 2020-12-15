@@ -70,7 +70,7 @@ public class SchoolLogin extends AppCompatActivity {
         String sin = SIN.getText().toString().trim();
         String passw = pw.getText().toString().trim();
         if (sin.equals(info.sc_SIN) && passw.equals(info.sc_pw)) {
-            Intent i = new Intent(this, ClassSubjectDropDown.class);
+            Intent i = new Intent(this, SelectTeacher.class);
             i.putExtra("School name", info.sc_name + "");
             i.putExtra("Teacherlist", info.teacherlist);
             i.putExtra("Classlist", info.classlist);

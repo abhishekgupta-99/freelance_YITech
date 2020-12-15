@@ -7,12 +7,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
@@ -24,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.chivorn.smartmaterialspinner.SmartMaterialSpinner;
+import com.example.flatdialoglibrary.dialog.FlatDialog;
 import com.freelance.school_attendance.HelperClass.SharedPrefSession;
 import com.freelance.school_attendance.HelperClass.Student_Item_Card;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
@@ -96,7 +99,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
     private void initSpinner() {
         subjectspinner = findViewById(R.id.subjectspinner);
         classspinner = findViewById(R.id.classspinner);
-        teacherspinner = findViewById(R.id.teacherspinner);
+       // teacherspinner = findViewById(R.id.teacherspinner);
 
 
         provinceList = new ArrayList<>();
@@ -116,7 +119,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
 
         subjectspinner.setItem(subjectlist);
         classspinner.setItem(classlist);
-        teacherspinner.setItem(teacherlist);
+       // teacherspinner.setItem(teacherlist);
 
 
         //indicator.setVisibility(View.GONE);
@@ -204,12 +207,15 @@ public class ClassSubjectDropDown extends AppCompatActivity {
 
     }
 
-    public void markAttendance(View view) {
+    public void markAttendance(String url) {
+
+       // dialogboxlink();
         Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("Teacher", "Abhishek");
-        i.putExtra("Class", "1A");
-        i.putExtra("Subject", "English");
+        i.putExtra("Teacher", sp.getTeacherName());
+        i.putExtra("Class", selected_class);
+        i.putExtra("Subject", selected_subject);
         i.putExtra("LoginAs", loginAs);
+        i.putExtra("UserEnterUrl", url);
         startActivity(i);
 
       //  confirm_dropdown_selected();
@@ -246,40 +252,96 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         // Log.d("SELECTEEED",teacherspinner.getSelectedItem()+"");
 
 
-        teacherspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                // selected_teacher=info.teacherlist.get(position);
-                // Toast.makeText(ClassSubjectDropDown.this, info.teacherlist.get(position), Toast.LENGTH_SHORT).show();
-                //  Log.d("SELECTEDD", selected_teacher);
-            }
+//        teacherspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+//                // selected_teacher=info.teacherlist.get(position);
+//                // Toast.makeText(ClassSubjectDropDown.this, info.teacherlist.get(position), Toast.LENGTH_SHORT).show();
+//                //  Log.d("SELECTEDD", selected_teacher);
+//            }
+//
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                Toast.makeText(ClassSubjectDropDown.this, "Please Select From the Drop Down", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(ClassSubjectDropDown.this, "Please Select From the Drop Down", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        selected_teacher = teacherspinner.getSelectedItem() + "";
+      //  selected_teacher = teacherspinner.getSelectedItem() + "";
         selected_class = classspinner.getSelectedItem() + "";
         selected_subject = subjectspinner.getSelectedItem() + "";
 
 
-        Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("Teacher", selected_teacher);
-        i.putExtra("Class", selected_class);
-        i.putExtra("Subject", selected_subject);
-        i.putExtra("LoginAs", loginAs);
-        startActivity(i);
     }
 
     public void back(View view) {
         onBackPressed();
     }
 
-    public void logout(View view) {
-        sp.logoutUser();
+    public void exit(View view) {
+        //sp.logoutUser();
+        this.finish();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAndRemoveTask();
+        }
+        finishAffinity();
+       // addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        // Add new Flag to start new Activity
+       // i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        System.exit(0);
+    }
+
+    public void first_dialogboxlink(View view)
+    {
+        confirm_dropdown_selected();
+
+        SharedPrefSession sp;
+        sp=new SharedPrefSession(getApplicationContext());
+
+        if(sp.get_dialog_url_status())
+        {
+            markAttendance(sp.get_prev_dialog_url_entered());
+        }
+        else
+        {
+            final FlatDialog flatDialog = new FlatDialog(this);
+            flatDialog.setTitle("Gsheet link")
+                    .setSubtitle("Please paste the Google Sheet Link here ! ")
+                    .setFirstTextFieldHint("Link")
+                    // .setSecondTextFieldHint("password")
+                    .setFirstButtonText("CONNECT")
+                    .setSecondButtonText("CANCEL")
+                    .setFirstButtonColor(R.color.md_blue_200)
+                    .setSecondButtonColor(ResourcesCompat.getColor(getResources(), R.color.white, null))
+                    .setSecondButtonTextColor(R.color.md_blue_200)
+                    .setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.md_blue_200, null))
+
+                    .withFirstButtonListner(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            String url = flatDialog.getFirstTextField();
+                            if (URLUtil.isValidUrl(url)) {
+                                markAttendance(url);
+                                flatDialog.dismiss();
+
+                                //Toast.makeText(ClassSubjectDropDown.this, "Success", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ClassSubjectDropDown.this, "Please Enter A Valid Url", Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        }
+                    })
+                    .withSecondButtonListner(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            flatDialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
     }
 }

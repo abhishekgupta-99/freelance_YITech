@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.freelance.school_attendance.HelperClass.RecyclerViewAdapter;
+import com.freelance.school_attendance.HelperClass.SharedPrefSession;
 import com.freelance.school_attendance.HelperClass.Student_Item_Card;
 import com.shreyaspatil.MaterialDialog.BottomSheetMaterialDialog;
 import com.shreyaspatil.MaterialDialog.interfaces.DialogInterface;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     String t, c, s, class_gs;
     boolean loginAs;
     Button bt_save;
+    private String userEnterUrl="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         mark = findViewById(R.id.markmain);
         // Button fab = findViewById(R.id.fab)
         getextraIntentData();
+        updateUIRole();
         mRecyclerview();
         //updateUI();
         getItems();
@@ -101,6 +104,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void updateUIRole() {
+        TextView stat = findViewById(R.id.statusmain);
+        TextView radiogroup_tv = findViewById(R.id.markmain);
+        if(!loginAs)
+        {
+            stat.setVisibility(View.GONE);
+            //radiogroup_tv.setVisibility(View.GONE);
+        }
+        else
+        {
+            radiogroup_tv.setVisibility(View.INVISIBLE);
+            bt_save.setVisibility(View.GONE);
+        }
+    }
+
     private void getextraIntentData() {
 
         Intent iin = getIntent();
@@ -113,41 +131,34 @@ public class MainActivity extends AppCompatActivity {
             c = "Class : " + b.getString("Class");
             s = "Subject : " + b.getString("Subject");
             loginAs = b.getBoolean("LoginAs");
+            userEnterUrl=b.getString("UserEnterUrl");
             teacher.setText(t);
             class_div.setText(c);
             subject.setText(s);
-         //   status.setVisibility(View.GONE);
-         //   mark.setVisibility(View.GONE);
         }
 
-        if(loginAs)
-        {
-            bt_save.setVisibility(View.GONE);
-        }
     }
 
     private void getItems() {
 
-        loading = ProgressDialog.show(this, "Loading", "Updating App", false, true);
+          loading = ProgressDialog.show(this, "Loading", "Updating App", false, true);
         loading.setCanceledOnTouchOutside(false);
         loading.setCancelable(false);
 ////////////////////////////////////////////////////////////////////////////Working////////////
         final RequestQueue queue = Volley.newRequestQueue(this);
         // original     final String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
         // original  StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems",
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, getString(R.string.Slave_gs_url) + "?action=getItems&class=" + class_gs,
+
+
+       // StringRequest stringRequest = new StringRequest(Request.Method.GET, getString(R.string.Slave_gs_url) + "?action=getItems&class=" + class_gs,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,userEnterUrl + "?action=getItems&class=" + class_gs,
                 new Response.Listener<String>() {
 
 
                     @Override
                     public void onResponse(String response) {
                         parseItems(response);
-//                        Cache.Entry entry = new Cache.Entry();
-//                        queue.getCache().put(response,entry);
-                        // queue.getCache().invalidate(url,true);
-
-//                        Log.d("ANSRESPONSE",response);
-                    }
+                }
                 },
 
                 new Response.ErrorListener() {
@@ -159,6 +170,29 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         ) {
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                if(response!=null)
+                { SharedPrefSession sp;
+                    sp=new SharedPrefSession(getApplicationContext());
+
+                    if(response.statusCode== HttpURLConnection.HTTP_OK)
+                {
+
+                    sp.set_dialog_url_status(true, userEnterUrl);
+                }
+                else
+                {
+                    sp.set_dialog_url_status(false, userEnterUrl);
+                }
+
+                }
+
+
+                return super.parseNetworkResponse(response);
+            }
+
             @Override
             public void deliverError(VolleyError error) {
                 if (error instanceof NoConnectionError) {
@@ -174,12 +208,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-//        int socketTimeOut = 50000;
-//        RetryPolicy policy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-//
-//        stringRequest.setRetryPolicy(policy);
 
-        //  RequestQueue queue = Volley.newRequestQueue(this);
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 0,
                 2,
@@ -322,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
         //https://script.google.com/macros/s/AKfycbzpTPG7TKiURwb017csK3aoBKakNUgmSf7utYSQuqixIqVLz3Q/exec
         final ProgressDialog loading = ProgressDialog.show(this, "Adding Details to Google Sheet", "Please wait");
         //original url    StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec",
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.Slave_gs_url),
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, userEnterUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -332,9 +361,10 @@ public class MainActivity extends AppCompatActivity {
                         absent_roll_nos = "";
                         present_roll_nos="";
                         wp_roll_nos="";
-                        getItems();
-                        //  Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                        //startActivity(intent);
+                       // getItems();
+                        Intent intent = new Intent(getApplicationContext(),ClassSubjectDropDown.class);
+                        intent.putExtra("LoginAs",loginAs);
+                        startActivity(intent);
 
                     }
                 },

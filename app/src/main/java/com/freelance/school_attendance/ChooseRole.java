@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +27,11 @@ public class ChooseRole extends AppCompatActivity {
     }
 
     public void openTeacherLogin(View v) {
-        dialogboxlink();
+      //  dialogboxlink();
+        Intent i = new Intent(ChooseRole.this, SchoolLogin.class);
+        i.putExtra("LoginAs", false);
+        startActivity(i);
+
 
     }
 
@@ -37,35 +42,5 @@ public class ChooseRole extends AppCompatActivity {
 
     }
 
-   public void dialogboxlink()
-    {
-        final FlatDialog flatDialog = new FlatDialog(this);
-        flatDialog.setTitle("Gsheet link")
-                .setSubtitle("Please paste the Google Sheet Link here ! ")
-                .setFirstTextFieldHint("Link")
-               // .setSecondTextFieldHint("password")
-                .setFirstButtonText("CONNECT")
-                .setSecondButtonText("CANCEL")
-                .setFirstButtonColor(R.color.md_blue_200)
-                .setSecondButtonColor(ResourcesCompat.getColor(getResources(), R.color.white,null))
-                .setSecondButtonTextColor(R.color.md_blue_200)
-                .setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.md_blue_200,null))
 
-                .withFirstButtonListner(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(ChooseRole.this, flatDialog.getFirstTextField(), Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(ChooseRole.this, SchoolLogin.class);
-                        i.putExtra("LoginAs", false);
-                        startActivity(i);
-                    }
-                })
-                .withSecondButtonListner(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        flatDialog.dismiss();
-                    }
-                })
-                .show();
-    }
 }

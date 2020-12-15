@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 
 import com.freelance.school_attendance.ChooseRole;
 import com.freelance.school_attendance.ClassSubjectDropDown;
+import com.freelance.school_attendance.R;
 
 import java.util.HashMap;
 
@@ -30,6 +31,17 @@ public class SharedPrefSession {
 
     // All Shared Preferences Keys
     private static final String IS_LOGIN = "IsLoggedIn";
+
+
+
+    private static final String TEACHER_NAME = "teacher";
+
+    private static final String IS_DIALOGBOX_USER_ENTERED_URL_CORRECT = "IsDialogUrlCorrect";
+
+    private static final String DIALOGBOX_USER_ENTERED_URL= "DialogGUrl";
+
+
+
 
     // User name (make variable public to access from outside)
     public static final String KEY_NAME = "name";
@@ -140,4 +152,32 @@ public class SharedPrefSession {
     public boolean isLoggedIn(){
         return pref.getBoolean(IS_LOGIN, false);
 }
+
+public void set_dialog_url_status(boolean url_correct, String url)
+{
+    editor.putBoolean(IS_DIALOGBOX_USER_ENTERED_URL_CORRECT,url_correct);
+    editor.putString(DIALOGBOX_USER_ENTERED_URL,url);
+    editor.commit();
+}
+
+public void set_teacher_name(String teacher)
+{
+        editor.putString(TEACHER_NAME,teacher);
+        editor.commit();
+    }
+
+public boolean get_dialog_url_status()
+{
+   return pref.getBoolean(IS_DIALOGBOX_USER_ENTERED_URL_CORRECT,false);
+
+}
+
+public String get_prev_dialog_url_entered()
+{
+    return pref.getString(DIALOGBOX_USER_ENTERED_URL,_context.getString(R.string.Slave_gs_url));
+}
+
+    public String getTeacherName() {
+        return pref.getString(TEACHER_NAME,"");
+    }
 }

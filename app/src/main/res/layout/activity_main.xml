@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/poppins"
-            android:text="P   A    WP "
+            android:text="P   A    WP"
             android:textAlignment="center"
             android:textColor="@color/background900"
             android:textSize="16sp" />

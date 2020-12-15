@@ -115,7 +115,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         //holder.status.setText(status.setstatus(currentItem.getPresent_lecs(),currentItem.getTotallecs()));
         show_hide_att_percentage(holder, currentItem );
 
-//        holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
+
+       // holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
 
 //        if(Integer.parseInt(currentItem.getPercent())< 75) {
 //            holder.cp.setTextColor(Color.RED);
@@ -244,18 +245,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public void show_hide_att_percentage(ViewHolder holder, Student_Item_Card currentItem) {
         if (loginAs) {
-            try {
-                holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
-                holder.cp.setTextColor(Color.BLACK);
-                holder.checkBox.setVisibility(View.INVISIBLE);
-            } catch (Exception e) {
+
+            if(currentItem.getPercent().trim().equals("#NUM!"))
+            {
                 holder.cp.setCurrentProgress(0);
+            }
+            else {
+                holder.cp.setCurrentProgress(Double.parseDouble(currentItem.getPercent().trim()));
+            }
+            try {
+
+               // Log.d("PERCENTTT", currentItem.getPercent()+"");
+               // holder.checkBox.setVisibility(View.INVISIBLE);
+                holder.rg.setVisibility(View.INVISIBLE);
+            } catch (Exception e) {
 
             }
 
         } else {
             holder.cp.setVisibility(View.GONE);
-
 
         }
 

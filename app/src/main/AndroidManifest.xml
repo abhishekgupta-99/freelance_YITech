@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".SchoolLogin"></activity>
+        <activity android:name=".SelectTeacher"></activity>
+        <activity android:name=".SchoolLogin" />
         <activity android:name=".ChooseRole" />
         <activity android:name=".ClassSubjectDropDown" /> <!-- <activity android:name="com.freelance.school_attendance.AppIntro" -->
         <!-- android:theme="@style/Theme.Intro" -->

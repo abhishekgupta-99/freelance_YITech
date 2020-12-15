@@ -20,12 +20,12 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        android:src="@drawable/school" />
+        app:srcCompat="@drawable/ic_teacher" />
 
     <TextView
         android:id="@+id/textView9"
@@ -42,25 +42,12 @@
         app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
     <TextView
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/poppins"
-        android:text="Exit"
-        android:textColor="#4A89F3"
-        android:textSize="18sp"
-        android:onClick="exit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
-
-    <TextView
         android:id="@+id/ed_scname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/poppins_medium"
-        android:text="School Name"
+        android:text="Teacher"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/imageView7"
@@ -71,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Please login to your account"
+        android:text="Please select your name from the list"
         app:layout_constraintStart_toStartOf="@+id/ed_scname"
         app:layout_constraintTop_toBottomOf="@+id/ed_scname" />
 
@@ -81,7 +68,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:onClick="first_dialogboxlink"
+        android:onClick="proceed"
         android:text="CONTINUE"
         android:textSize="18sp"
         app:backgroundTint="#2196F3"
@@ -104,29 +91,12 @@
         tools:context=".DropDownMenus"
         tools:layout_editor_absoluteX="-61dp">
 
-<!--        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner-->
-<!--            android:id="@+id/teacherspinner"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:smsp_floatingLabelColor="@color/md_blue_200"-->
-<!--            app:smsp_hint="Select Teacher Name"-->
-<!--            app:smsp_hintColor="#C5C5C5"-->
-<!--            app:smsp_hintSize="20sp"-->
-<!--            app:smsp_isReSelectable="true"-->
-<!--            app:smsp_isSearchable="true"-->
-<!--            app:smsp_itemColor="@color/background900"-->
-<!--            app:smsp_itemListColor="@color/background900"-->
-<!--            app:smsp_itemListHintBackgroundColor="#808080"-->
-<!--            app:smsp_itemListHintColor="#FFFFFF"-->
-<!--            app:smsp_multilineError="false"-->
-<!--            app:smsp_selectedItemListColor="@color/md_blue_200" />-->
-
         <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-            android:id="@+id/classspinner"
+            android:id="@+id/teacherspinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:smsp_floatingLabelColor="@color/md_blue_200"
-            app:smsp_hint="Select Class"
+            app:smsp_hint="Select Teacher Name"
             app:smsp_hintColor="#C5C5C5"
             app:smsp_hintSize="20sp"
             app:smsp_isReSelectable="true"
@@ -138,22 +108,6 @@
             app:smsp_multilineError="false"
             app:smsp_selectedItemListColor="@color/md_blue_200" />
 
-        <com.chivorn.smartmaterialspinner.SmartMaterialSpinner
-            android:id="@+id/subjectspinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:smsp_floatingLabelColor="@color/md_blue_200"
-            app:smsp_hint="Select Subject"
-            app:smsp_hintColor="#C5C5C5"
-            app:smsp_hintSize="20sp"
-            app:smsp_isReSelectable="true"
-            app:smsp_isSearchable="true"
-            app:smsp_itemColor="@color/background900"
-            app:smsp_itemListColor="@color/background900"
-            app:smsp_itemListHintBackgroundColor="#808080"
-            app:smsp_itemListHintColor="#FFFFFF"
-            app:smsp_multilineError="false"
-            app:smsp_selectedItemListColor="@color/md_blue_200" />
 
     </LinearLayout>
 
