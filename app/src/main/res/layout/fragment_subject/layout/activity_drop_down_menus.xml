@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Please login to your account"
+        android:text="Please select class and subject"
         app:layout_constraintStart_toStartOf="@+id/ed_scname"
         app:layout_constraintTop_toBottomOf="@+id/ed_scname" />
 
