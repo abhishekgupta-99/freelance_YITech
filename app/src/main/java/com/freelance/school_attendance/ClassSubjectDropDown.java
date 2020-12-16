@@ -45,7 +45,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
     TextView sc_name;
     private SmartMaterialSpinner classspinner, teacherspinner;
     private List<String> provinceList;
-    FetchDetailsSheet info;
+    FetchDetailsFromMasterGSheet info;
     String selected_class, selected_teacher, selected_subject;
     ArrayList<String> teacherlist = new ArrayList<String>();
     ArrayList<String> subjectlist = new ArrayList<String>();
@@ -112,7 +112,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
            ProgressDialog loading = ProgressDialog.show(this, "Loading", "Fetching Credentials", false, true);
             loading.setCanceledOnTouchOutside(false);
             loading.setCancelable(false);
-           FetchDetailsSheet info = new FetchDetailsSheet(this, loading, sp.get_prev_master_dialog_url_entered());
+           FetchDetailsFromMasterGSheet info = new FetchDetailsFromMasterGSheet(this, loading, sp.get_prev_master_dialog_url_entered());
             info.getItems();
             subjectlist=info.subjectlist;
             classlist=info.classlist;
@@ -212,7 +212,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
     public void markAttendance(String url) {
 
        // dialogboxlink();
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, FetchStudentsAttendanceFromSlaveGsheet.class);
         i.putExtra("Teacher", sp.getTeacherName());
         i.putExtra("Class", selected_class);
         i.putExtra("Subject", selected_subject);

@@ -23,7 +23,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 
-public class AppIntro extends Activity {
+public class AppIntroFirstPage extends Activity {
 
     private static final int RC_SIGN_IN = 321;
     SharedPrefSession sp;

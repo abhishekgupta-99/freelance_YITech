@@ -42,11 +42,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class FetchStudentsAttendanceFromSlaveGsheet extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter;
     ProgressDialog loading;
-    private static MainActivity mInstance;
+    private static FetchStudentsAttendanceFromSlaveGsheet mInstance;
     private RequestQueue mRequestQueue;
 
     private DatabaseHelper db;
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                         SharedPrefSession sp;
                         sp=new SharedPrefSession(getApplicationContext());
                         sp.set_master_dialog_url_status(false, "");
-                        Toast.makeText(MainActivity.this, "Could not fetch details ! ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(FetchStudentsAttendanceFromSlaveGsheet.this, "Could not fetch details ! ", Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -325,13 +325,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static synchronized MainActivity getInstance() {
+    public static synchronized FetchStudentsAttendanceFromSlaveGsheet getInstance() {
         return mInstance;
     }
 
     private void updateUI() {
 
-        DatabaseHelper dbh = new DatabaseHelper(MainActivity.this);
+        DatabaseHelper dbh = new DatabaseHelper(FetchStudentsAttendanceFromSlaveGsheet.this);
         student_list = dbh.getAllElements();
         // alarm_listcopy=new ArrayList<>(alarm_list);
         mAdapter = new RecyclerViewAdapter(student_list);

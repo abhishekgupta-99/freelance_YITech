@@ -14,7 +14,7 @@ import com.freelance.school_attendance.HelperClass.SharedPrefSession;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class SchoolLogin extends AppCompatActivity {
-    FetchDetailsSheet info;
+    FetchDetailsFromMasterGSheet info;
     TextInputEditText SIN, pw;
     boolean loginAs;
     ProgressDialog loading;
@@ -42,7 +42,7 @@ public class SchoolLogin extends AppCompatActivity {
         loading.setCanceledOnTouchOutside(false);
         loading.setCancelable(false);
 
-        info = new FetchDetailsSheet(this, loading,master_url);
+        info = new FetchDetailsFromMasterGSheet(this, loading,master_url);
         info.getItems();
         // initSpinner();
 

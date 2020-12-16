@@ -19,7 +19,7 @@
         <activity android:name=".SelectTeacher"></activity>
         <activity android:name=".SchoolLogin" />
         <activity android:name=".ChooseRole" />
-        <activity android:name=".ClassSubjectDropDown" /> <!-- <activity android:name="com.freelance.school_attendance.AppIntro" -->
+        <activity android:name=".ClassSubjectDropDown" /> <!-- <activity android:name="com.freelance.school_attendance.AppIntroFirstPage" -->
         <!-- android:theme="@style/Theme.Intro" -->
         <!-- > -->
         <!-- <intent-filter> -->
@@ -28,9 +28,9 @@
         <!-- </intent-filter> -->
         <!-- </activity> -->
         <activity android:name=".DateTime" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".FetchStudentsAttendanceFromSlaveGsheet" />
         <activity
-            android:name=".AppIntro"
+            android:name=".AppIntroFirstPage"
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

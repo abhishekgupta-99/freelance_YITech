@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
-public class FetchDetailsSheet {
+public class FetchDetailsFromMasterGSheet {
 
     ArrayList<String> teacherlist = new ArrayList<String>();
     ArrayList<String> subjectlist = new ArrayList<String>();
@@ -34,12 +34,15 @@ public class FetchDetailsSheet {
     String Master_url;
     ProgressDialog indicator;
 
-    public FetchDetailsSheet(Context ctx, ProgressDialog indicator, String master_url) {
+    public FetchDetailsFromMasterGSheet(Context ctx, ProgressDialog indicator, String master_url) {
         this.Master_url=master_url;
         this.ctx = ctx;
         this.indicator = indicator;
     }
 
+
+    //This method is an important funtion to fetch all the data from the google sheet.
+    // Please change the variable Master_url with your custom Master School Gsheet Url in the StringRequest line GET Method.
     public void getItems() {
 
 
@@ -110,7 +113,7 @@ public class FetchDetailsSheet {
 
     }
 
-
+// This method takes the response from the getItems() method and breaks the json response into our required variables as shown in the function.
     public void parseItems(String jsonResposnce) {
         ArrayList<Student_Item_Card> list = new ArrayList<Student_Item_Card>();
 
@@ -153,8 +156,7 @@ public class FetchDetailsSheet {
                 sc_name = obj.getString("School Name");
                 sc_SIN = obj.getString("SIN");
                 sc_pw = obj.getString("School Password");
-
-                Log.d("SINNNN", sc_SIN);
+                
 
             }
 
