@@ -3,6 +3,7 @@ package com.freelance.school_attendance;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
@@ -13,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.freelance.school_attendance.HelperClass.SharedPrefSession;
 import com.freelance.school_attendance.HelperClass.Student_Item_Card;
 
 import org.json.JSONArray;
@@ -29,9 +31,11 @@ public class FetchDetailsSheet {
     ArrayList<String> classlist = new ArrayList<String>();
     String sc_name, sc_SIN, sc_pw;
     Context ctx;
+    String Master_url;
     ProgressDialog indicator;
 
-    public FetchDetailsSheet(Context ctx, ProgressDialog indicator) {
+    public FetchDetailsSheet(Context ctx, ProgressDialog indicator, String master_url) {
+        this.Master_url=master_url;
         this.ctx = ctx;
         this.indicator = indicator;
     }
@@ -41,7 +45,8 @@ public class FetchDetailsSheet {
 
         final RequestQueue queue = Volley.newRequestQueue(ctx);
         //  final String url = "https://script.google.com/macros/s/AKfycbxueYt0iOuJN6iPKJKG35CSKDegfuvQ3ls3yENsaefg2qVqGiS_/exec?action=getItems";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://script.google.com/macros/s/AKfycbz938aPu6B_i3RootSMc4JpFKgA09uMhEyUMsK6F9BT0ijJJAAT/exec?action=getItems",
+     //   StringRequest stringRequest = new StringRequest(Request.Method.GET, ctx.getString(R.string.Master_gs_url) +"?action=getItems",
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, Master_url +"?action=getItems",
                 new Response.Listener<String>() {
 
                     @Override
@@ -56,12 +61,37 @@ public class FetchDetailsSheet {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
+                        SharedPrefSession sp;
+                        sp=new SharedPrefSession(ctx);
+                        Toast.makeText(ctx, "Error fetching Details !", Toast.LENGTH_LONG).show();
+                        sp.set_master_dialog_url_status(false, Master_url);
                         error.printStackTrace();
 
                     }
                 }
-        ) {
-            @Override
+        )  {
+                    @Override
+                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                        if(response!=null)
+                        { SharedPrefSession sp;
+                            sp=new SharedPrefSession(ctx);
+
+                            if(response.statusCode== HttpURLConnection.HTTP_OK)
+                            {
+
+                                sp.set_master_dialog_url_status(true, Master_url);
+                            }
+                            else
+                            {
+                                sp.set_master_dialog_url_status(false, Master_url);
+                            }
+
+                        }
+                        return super.parseNetworkResponse(response);
+                    }
+
+                    @Override
             public void deliverError(VolleyError error) {
                 if (error instanceof NoConnectionError) {
                     Cache.Entry entry = this.getCacheEntry();
@@ -104,6 +134,10 @@ public class FetchDetailsSheet {
             // initSpinner();
 
         } catch (JSONException e) {
+            Toast.makeText(ctx, "You entered a wrong url ! ", Toast.LENGTH_LONG).show();
+            SharedPrefSession sp;
+            sp=new SharedPrefSession(ctx);
+            sp.set_master_dialog_url_status(false, Master_url);
             e.printStackTrace();
         }
 

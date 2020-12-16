@@ -165,7 +165,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        Toast.makeText(MainActivity.this, "Could not fetch details ! ", Toast.LENGTH_SHORT).show();
+                        SharedPrefSession sp;
+                        sp=new SharedPrefSession(getApplicationContext());
+                        sp.set_master_dialog_url_status(false, "");
+                        Toast.makeText(MainActivity.this, "Could not fetch details ! ", Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -180,11 +183,11 @@ public class MainActivity extends AppCompatActivity {
                     if(response.statusCode== HttpURLConnection.HTTP_OK)
                 {
 
-                    sp.set_dialog_url_status(true, userEnterUrl);
+                    sp.set_slave_dialog_url_status(true, userEnterUrl);
                 }
                 else
                 {
-                    sp.set_dialog_url_status(false, userEnterUrl);
+                    sp.set_slave_dialog_url_status(false, userEnterUrl);
                 }
 
                 }
@@ -295,6 +298,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         } catch (JSONException e) {
+
+            Toast.makeText(getApplicationContext(), "You entered a wrong url ! ", Toast.LENGTH_LONG).show();
+            SharedPrefSession sp;
+            sp=new SharedPrefSession(getApplicationContext());
+            sp.set_master_dialog_url_status(false, "");
+            e.printStackTrace();
             e.printStackTrace();
         }
 

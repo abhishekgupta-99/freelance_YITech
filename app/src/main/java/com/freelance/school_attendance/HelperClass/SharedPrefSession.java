@@ -36,9 +36,14 @@ public class SharedPrefSession {
 
     private static final String TEACHER_NAME = "teacher";
 
-    private static final String IS_DIALOGBOX_USER_ENTERED_URL_CORRECT = "IsDialogUrlCorrect";
+    private static final String IS_SLAVE_DIALOGBOX_USER_ENTERED_URL_CORRECT = "IsSlaveDialogUrlCorrect";
 
-    private static final String DIALOGBOX_USER_ENTERED_URL= "DialogGUrl";
+    private static final String SLAVE_DIALOGBOX_USER_ENTERED_URL= "SlaveDialogGUrl";
+
+
+    private static final String IS_MASTER_DIALOGBOX_USER_ENTERED_URL_CORRECT = "IsMasterDialogUrlCorrect";
+
+    private static final String MASTER_DIALOGBOX_USER_ENTERED_URL= "MasterDialogGUrl";
 
 
 
@@ -80,20 +85,31 @@ public class SharedPrefSession {
      * */
     public void checkLoginandRedirect(){
         // Check login status
-        if(this.isSchool()){
-            // user is not logged in redirect him to Login Activity
-            Intent i = new Intent(_context, ClassSubjectDropDown.class);
-            i.putExtra("LoginAs", true);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if(get_master_dialog_url_status()) {
 
-            // Add new Flag to start new Activity
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            _context.startActivity(i);
+            if (this.isSchool()) {
+                // user is not logged in redirect him to Login Activity
+                Intent i = new Intent(_context, ClassSubjectDropDown.class);
+                i.putExtra("LoginAs", true);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                // Add new Flag to start new Activity
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                _context.startActivity(i);
+            } else {
+                Intent i = new Intent(_context, ClassSubjectDropDown.class);
+                i.putExtra("LoginAs", false);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                // Add new Flag to start new Activity
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                _context.startActivity(i);
+
+            }
         }
-        else
-        {
-            Intent i = new Intent(_context, ClassSubjectDropDown.class);
-            i.putExtra("LoginAs", false);
+        else {
+            Intent i = new Intent(_context, ChooseRole.class);
+         //   i.putExtra("LoginAs", false);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             // Add new Flag to start new Activity
@@ -153,12 +169,19 @@ public class SharedPrefSession {
         return pref.getBoolean(IS_LOGIN, false);
 }
 
-public void set_dialog_url_status(boolean url_correct, String url)
+public void set_slave_dialog_url_status(boolean url_correct, String url)
 {
-    editor.putBoolean(IS_DIALOGBOX_USER_ENTERED_URL_CORRECT,url_correct);
-    editor.putString(DIALOGBOX_USER_ENTERED_URL,url);
+    editor.putBoolean(IS_SLAVE_DIALOGBOX_USER_ENTERED_URL_CORRECT,url_correct);
+    editor.putString(SLAVE_DIALOGBOX_USER_ENTERED_URL,url);
     editor.commit();
 }
+
+public void set_master_dialog_url_status(boolean url_correct, String url)
+    {
+        editor.putBoolean(IS_MASTER_DIALOGBOX_USER_ENTERED_URL_CORRECT,url_correct);
+        editor.putString(MASTER_DIALOGBOX_USER_ENTERED_URL,url);
+        editor.commit();
+    }
 
 public void set_teacher_name(String teacher)
 {
@@ -166,16 +189,28 @@ public void set_teacher_name(String teacher)
         editor.commit();
     }
 
-public boolean get_dialog_url_status()
+public boolean get_slave_dialog_url_status()
 {
-   return pref.getBoolean(IS_DIALOGBOX_USER_ENTERED_URL_CORRECT,false);
+   return pref.getBoolean(IS_SLAVE_DIALOGBOX_USER_ENTERED_URL_CORRECT,false);
 
 }
 
-public String get_prev_dialog_url_entered()
+public String get_prev_slave_dialog_url_entered()
 {
-    return pref.getString(DIALOGBOX_USER_ENTERED_URL,_context.getString(R.string.Slave_gs_url));
+    return pref.getString(SLAVE_DIALOGBOX_USER_ENTERED_URL,_context.getString(R.string.Slave_gs_url));
 }
+
+
+    public boolean get_master_dialog_url_status()
+    {
+        return pref.getBoolean(IS_MASTER_DIALOGBOX_USER_ENTERED_URL_CORRECT,false);
+
+    }
+
+    public String get_prev_master_dialog_url_entered()
+    {
+        return pref.getString(MASTER_DIALOGBOX_USER_ENTERED_URL,_context.getString(R.string.Master_gs_url));
+    }
 
     public String getTeacherName() {
         return pref.getString(TEACHER_NAME,"");

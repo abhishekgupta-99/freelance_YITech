@@ -19,6 +19,7 @@ public class SchoolLogin extends AppCompatActivity {
     boolean loginAs;
     ProgressDialog loading;
     SharedPrefSession sp;
+    private String master_url;
 
 
     @Override
@@ -41,7 +42,7 @@ public class SchoolLogin extends AppCompatActivity {
         loading.setCanceledOnTouchOutside(false);
         loading.setCancelable(false);
 
-        info = new FetchDetailsSheet(this, loading);
+        info = new FetchDetailsSheet(this, loading,master_url);
         info.getItems();
         // initSpinner();
 
@@ -54,6 +55,7 @@ public class SchoolLogin extends AppCompatActivity {
 
         if (b != null) {
             loginAs = b.getBoolean("LoginAs");
+            master_url=b.getString("master_url");
 
         }
 
@@ -76,6 +78,7 @@ public class SchoolLogin extends AppCompatActivity {
             i.putExtra("Classlist", info.classlist);
             i.putExtra("Subjectlist", info.subjectlist);
             i.putExtra("LoginAs", loginAs);
+            i.putExtra("master_url",master_url);
             sp.createLoginSession(loginAs);
             startActivity(i);
         } else {

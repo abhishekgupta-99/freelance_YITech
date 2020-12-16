@@ -52,6 +52,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
     ArrayList<String> classlist = new ArrayList<String>();
     boolean loginAs;
     SharedPrefSession sp;
+    private String master_url;
 
 
     @Override
@@ -90,6 +91,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
             subjectlist = (ArrayList<String>) getIntent().getSerializableExtra("Subjectlist");
             classlist = (ArrayList<String>) getIntent().getSerializableExtra("Classlist");
             loginAs = b.getBoolean("LoginAs");
+            master_url=b.getString("master_url");
 
             sc_name.setText(j);
         }
@@ -110,7 +112,7 @@ public class ClassSubjectDropDown extends AppCompatActivity {
            ProgressDialog loading = ProgressDialog.show(this, "Loading", "Fetching Credentials", false, true);
             loading.setCanceledOnTouchOutside(false);
             loading.setCancelable(false);
-           FetchDetailsSheet info = new FetchDetailsSheet(this, loading);
+           FetchDetailsSheet info = new FetchDetailsSheet(this, loading, sp.get_prev_master_dialog_url_entered());
             info.getItems();
             subjectlist=info.subjectlist;
             classlist=info.classlist;
@@ -300,14 +302,14 @@ public class ClassSubjectDropDown extends AppCompatActivity {
         SharedPrefSession sp;
         sp=new SharedPrefSession(getApplicationContext());
 
-        if(sp.get_dialog_url_status())
+        if(sp.get_slave_dialog_url_status())
         {
-            markAttendance(sp.get_prev_dialog_url_entered());
+            markAttendance(sp.get_prev_slave_dialog_url_entered());
         }
         else
         {
             final FlatDialog flatDialog = new FlatDialog(this);
-            flatDialog.setTitle("Gsheet link")
+            flatDialog.setTitle("Gsheet Slave link")
                     .setSubtitle("Please paste the Google Sheet Link here ! ")
                     .setFirstTextFieldHint("Link")
                     // .setSecondTextFieldHint("password")
