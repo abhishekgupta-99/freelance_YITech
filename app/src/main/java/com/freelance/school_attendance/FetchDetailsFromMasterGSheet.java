@@ -156,7 +156,7 @@ public class FetchDetailsFromMasterGSheet {
                 sc_name = obj.getString("School Name");
                 sc_SIN = obj.getString("SIN");
                 sc_pw = obj.getString("School Password");
-                
+
 
             }
 
